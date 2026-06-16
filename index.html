@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Questionário de Perfil de Investidor · Victor Faleiros</title>
+<style>
+  :root{
+    --bg:#f4f1ea; --card:#ffffff; --ink:#2a2620; --muted:#8a8377;
+    --line:#e4ddcf; --accent:#9c7b43; --accent-soft:#f6efde; --alerta:#a8442f;
+    --positivo:#5f7a4e;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);line-height:1.55;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto;padding:30px 22px 64px}
+  header{text-align:center;padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:24px}
+  header h1{font-family:Georgia,"Times New Roman",serif;font-size:23px;font-weight:600;letter-spacing:.2px}
+  header p{color:var(--muted);font-size:14px;margin-top:6px}
+  .progress-wrap{margin-bottom:18px}
+  .progress-text{font-size:12px;color:var(--muted);letter-spacing:.7px;text-transform:uppercase;margin-bottom:8px}
+  .progress-bar{height:4px;background:var(--line);border-radius:2px;overflow:hidden}
+  .progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width .3s ease}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:30px 30px 26px;box-shadow:0 1px 3px rgba(0,0,0,.03)}
+  .qnum{font-size:12px;font-weight:700;color:var(--accent);letter-spacing:.8px;
+    text-transform:uppercase;margin-bottom:14px}
+  .enunciado p{font-size:17px;margin-bottom:12px}
+  .enunciado p:last-child{margin-bottom:0}
+  .grafico{margin:18px 0}
+  .grafico img{width:100%;border:1px solid var(--line);border-radius:8px;display:block}
+  .opcoes{margin-top:20px;display:flex;flex-direction:column;gap:10px}
+  .opcao{display:flex;align-items:flex-start;gap:13px;text-align:left;width:100%;
+    background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:15px 17px;
+    font-size:15.5px;color:var(--ink);cursor:pointer;font-family:inherit;line-height:1.5;
+    transition:border-color .15s,background .15s}
+  .opcao:hover{border-color:#c9bda0;background:#fdfcf9}
+  .opcao.sel{border-color:var(--accent);background:var(--accent-soft)}
+  .radio{flex:0 0 18px;width:18px;height:18px;border:2px solid #c4bba6;border-radius:50%;
+    margin-top:1px;position:relative;transition:border-color .15s}
+  .opcao.sel .radio{border-color:var(--accent)}
+  .opcao.sel .radio::after{content:"";position:absolute;inset:3px;background:var(--accent);border-radius:50%}
+  .nav{display:flex;justify-content:space-between;margin-top:22px;gap:12px}
+  .nav-btn{font-family:inherit;font-size:15px;padding:12px 26px;border-radius:9px;cursor:pointer;
+    border:1.5px solid var(--line);background:#fff;color:var(--ink);transition:.15s}
+  .nav-btn:hover:not(:disabled){border-color:#c9bda0}
+  .nav-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+  .nav-btn.primary:hover:not(:disabled){background:#876835}
+  .nav-btn:disabled{opacity:.38;cursor:not-allowed}
+  .intro p.lead{font-size:16px;margin-bottom:8px}
+  .intro .nota{font-size:14px;color:var(--muted);margin-bottom:22px}
+  .campo{margin-bottom:16px}
+  .campo label{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:6px}
+  .campo input{width:100%;font-family:inherit;font-size:15.5px;padding:12px 14px;
+    border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);outline:none;transition:border-color .15s}
+  .campo input:focus{border-color:var(--accent)}
+  .erro{color:var(--alerta);font-size:13.5px;margin-top:4px;min-height:18px}
+  .final{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:40px 34px;text-align:center}
+  .final .ok{font-size:46px;line-height:1;color:var(--positivo);margin-bottom:14px}
+  .final h2{font-family:Georgia,serif;font-size:23px;margin-bottom:10px}
+  .final p{color:var(--muted);font-size:15.5px;max-width:480px;margin:0 auto}
+  .spin{display:inline-block;width:22px;height:22px;border:3px solid var(--line);
+    border-top-color:var(--accent);border-radius:50%;animation:r .8s linear infinite}
+  @keyframes r{to{transform:rotate(360deg)}}
+  footer{text-align:center;color:var(--muted);font-size:12px;margin-top:26px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1 id="hd-title">Questionário de Perfil de Investidor</h1>
+    <p id="hd-sub">Oito perguntas rápidas para o Victor desenhar a carteira certa para você.</p>
+  </header>
+  <main id="app"></main>
+  <footer>Planejamento Financeiro · Victor Faleiros</footer>
+</div>
+<script>
+  // ===== Config de envio (Supabase, projeto vfaleiros · anon só INSERT) =====
+  const SUPABASE_URL = 'https://oumcsjqiuitzosrgnhbr.supabase.co/rest/v1/perfil_respostas';
+  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im91bWNzanFpdWl0em9zcmduaGJyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAwNTM5MzQsImV4cCI6MjA5NTYyOTkzNH0.WooEUe4Jes5TjQXuc-zQdYwdgG13ZBm5wR_FzSU_gWA';
+  const EMAIL_FALLBACK = 'victorfaleiros@outlook.com';
+
+  // ===== Perguntas (mesma régua do instrumento da R1) =====
+  const perguntas = [
+    { n:1, imagem:null, pontos:[5,4,2,1,6,3],
+      enunciado:[`Pensando na sua vida em geral (carreira, projetos importantes, decisões grandes), como você costuma se comportar diante de situações de incerteza?`],
+      opcoes:[
+        `Geralmente sigo em frente confiante, mesmo sem ter todas as informações. Acho que esperar demais paralisa`,
+        `Avalio bastante antes de decidir, mas quando decido, sigo firme. Não fico revisitando a decisão`,
+        `Prefiro ambientes mais previsíveis. Quando preciso decidir com incerteza, sofro um pouco no processo`,
+        `Costumo evitar situações de muita incerteza. Prefiro caminhos mais seguros mesmo que o retorno seja menor`,
+        `Gosto de situações desafiadoras e até procuro algumas. Incerteza para mim é oportunidade`,
+        `Decido quando preciso, mas tenho recaídas de ansiedade depois, ficando revisitando se foi a escolha certa`] },
+    { n:2, imagem:null, pontos:[2,6,1,4,3,5],
+      enunciado:[`Pensei em 6 pessoas que poderiam ser meus clientes. Cada uma tem uma forma própria de se relacionar com o próprio dinheiro investido. Marque a pessoa cuja descrição mais se parece com você.`],
+      opcoes:[
+        `Pedro — confere a carteira algumas vezes por semana. Se vê uma queda pequena, já fica desconfortável e questiona se foi a escolha certa.`,
+        `Renata — quando vê uma queda, sua primeira reação é pensar em comprar mais. Para ela, queda é desconto, não problema.`,
+        `Helena — em conversas sobre dinheiro, costuma dizer "prefiro ganhar menos e dormir tranquila". Já recusou produtos rentáveis no passado por achar arriscados.`,
+        `Lucas — entende que o mercado oscila e segue o plano traçado mesmo em momentos ruins, mas não disfarça o desconforto quando o mês fecha negativo.`,
+        `Antônio — quando aparece algo novo no mercado, fica curioso e quer saber mais. Aceita correr risco em parte do dinheiro, desde que outra parte fique mais protegida.`,
+        `Carla — assume publicamente que tem perfil arrojado. Em conversas com amigos, defende investimentos de risco e tem prazer em ter parte relevante do patrimônio em ativos voláteis.`] },
+    { n:3, imagem:null, pontos:[4,6,2,5,1,3],
+      enunciado:[`Independentemente de já investir ou não, com que frequência você costuma acompanhar notícias sobre economia, mercado financeiro e investimentos?`],
+      opcoes:[
+        `Acompanho semanalmente, gosto de me manter informado sobre o que está acontecendo`,
+        `Quase nunca acompanho. Confio que quem cuida do meu dinheiro vai me avisar quando algo importante acontecer`,
+        `Acompanho todos os dias, gosto de saber em tempo real o que está acontecendo`,
+        `Acompanho ocasionalmente, quando algum assunto chama atenção na mídia geral`,
+        `Acompanho várias vezes ao dia, especialmente em momentos de turbulência`,
+        `Acompanho mensalmente, mais por curiosidade do que por necessidade`] },
+    { n:4, imagem:`R1-grafico-pergunta-2.png`, pontos:[6,5,4,3,2,1],
+      enunciado:[
+        `Cada uma das 6 linhas (A a F) do gráfico mostra como teria sido investir R$ 100.000 em janeiro de 2016 por 10 anos, sem aportes, em 6 carteiras de risco crescente. São dados reais de 2016 a 2025.`,
+        `As mais arrojadas renderam mais, mas oscilaram mais pelo caminho: caíram um pouco mais e, principalmente, ficaram mais tempo abaixo do topo. O número em vermelho é a maior queda de cada uma; a barra de baixo é quanto tempo cada uma ficou abaixo do topo anterior.`,
+        `Qual desses caminhos você toparia viver pelos próximos 10 anos do seu plano de investimentos?`],
+      opcoes:[`Caminho C`,`Caminho E`,`Caminho A`,`Caminho D`,`Caminho F`,`Caminho B`] },
+    { n:5, imagem:null, pontos:[2,1,6,5,3,4],
+      enunciado:[`Imagine que você tem R$ 500.000 investidos e abre o extrato do mês. Qual dessas situações faria você perder o sono à noite?`],
+      opcoes:[
+        `Ver o saldo em R$ 495.000 (queda de R$ 5.000)`,
+        `Ver qualquer queda no extrato, mesmo de poucos reais`,
+        `Nenhuma dessas oscilações me tiraria o sono`,
+        `Ver o saldo em R$ 470.000 (queda de R$ 30.000)`,
+        `Ver o saldo em R$ 485.000 (queda de R$ 15.000)`,
+        `Ver o saldo em R$ 450.000 (queda de R$ 50.000)`] },
+    { n:6, imagem:null, pontos:[3,6,1,5,2],
+      enunciado:[`Em quanto tempo você pretende começar a utilizar parte relevante destes recursos? (Não é sobre resgate de emergência, que você sempre pode fazer, mas sobre quando planeja usar de fato uma parte relevante.)`],
+      opcoes:[
+        `Daqui a 5 a 10 anos`,
+        `Daqui a mais de 20 anos`,
+        `Em menos de 3 anos`,
+        `Daqui a 10 a 20 anos`,
+        `Daqui a 3 a 5 anos`] },
+    { n:7, imagem:null, pontos:[5,1,6,3],
+      enunciado:[`Como você descreveria a previsibilidade da sua renda atual?`],
+      opcoes:[
+        `Renda fixa de fonte estável (CLT, servidor, aposentadoria)`,
+        `Renda muito instável (autônomo sem reserva, comissões muito variáveis)`,
+        `Múltiplas fontes de renda estáveis, ou renda passiva relevante`,
+        `Renda variável, mas previsível em média (autônomo experiente, empresário com fluxo estável)`] },
+    { n:8, imagem:null, pontos:[3,6,1,4,5],
+      enunciado:[`Você já estava investindo em renda variável (ações, fundos de ações, multimercados, ETFs, etc.) durante alguma destas crises de mercado?`],
+      opcoes:[
+        `Crise da pandemia (março de 2020)`,
+        `Crise financeira global (2008-2009), com ou sem outras crises`,
+        `Não estava investindo em nenhuma crise`,
+        `Crise política/fiscal brasileira (2015-2016)`,
+        `Mais de uma das crises acima (excluindo 2008)`] }
+  ];
+
+  const perfis = ['Conservador I','Conservador II','Moderado I','Moderado II','Sofisticado I','Sofisticado II'];
+
+  let tela = 'intro';
+  let idx = 0;
+  let respostas = perguntas.map(() => null);
+  let cliente = { nome:'', contato:'' };
+  const app = document.getElementById('app');
+
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function render(){
+    if(tela === 'intro') return renderIntro();
+    if(tela === 'enviando') return renderEnviando();
+    if(tela === 'enviado') return renderEnviado();
+    if(tela === 'erro') return renderErro();
+    renderQuiz();
+  }
+
+  function renderIntro(){
+    app.innerHTML =
+      '<div class="card intro">' +
+        '<p class="lead">São 8 perguntas rápidas, leva uns 5 minutos. Não existe resposta certa ou errada: quanto mais honesto, melhor fica o seu plano.</p>' +
+        '<p class="nota">Suas respostas vão direto para o Victor. O resultado do perfil é montado por ele e apresentado na conversa de vocês.</p>' +
+        '<div class="campo"><label for="nome">Seu nome</label>' +
+          '<input id="nome" type="text" autocomplete="name" placeholder="Nome e sobrenome" value="' + esc(cliente.nome) + '"></div>' +
+        '<div class="campo"><label for="contato">WhatsApp ou e-mail</label>' +
+          '<input id="contato" type="text" autocomplete="tel" placeholder="(00) 00000-0000 ou seu@email.com" value="' + esc(cliente.contato) + '">' +
+          '<div class="erro" id="erro-id"></div></div>' +
+        '<div class="nav"><span></span>' +
+          '<button class="nav-btn primary" onclick="comecar()">Começar &rarr;</button></div>' +
+      '</div>';
+  }
+
+  function comecar(){
+    const nome = document.getElementById('nome').value.trim();
+    const contato = document.getElementById('contato').value.trim();
+    const erro = document.getElementById('erro-id');
+    if(nome.length < 2){ erro.textContent = 'Por favor, preencha o seu nome.'; document.getElementById('nome').focus(); return; }
+    if(contato.length < 5){ erro.textContent = 'Deixe um WhatsApp ou e-mail para o Victor falar com você.'; document.getElementById('contato').focus(); return; }
+    cliente.nome = nome; cliente.contato = contato;
+    tela = 'quiz'; idx = 0; render();
+  }
+
+  function renderQuiz(){
+    const p = perguntas[idx];
+    let enun = '';
+    p.enunciado.forEach((par, i) => {
+      enun += '<p>' + esc(par) + '</p>';
+      if(i === 0 && p.imagem){
+        enun += '<div class="grafico"><img src="' + p.imagem + '" alt="Gráfico da Pergunta 2"></div>';
+      }
+    });
+    const ops = p.opcoes.map((o, i) => {
+      const sel = respostas[idx] === i ? ' sel' : '';
+      return '<button class="opcao' + sel + '" onclick="selecionar(' + i + ')">' +
+             '<span class="radio"></span><span>' + esc(o) + '</span></button>';
+    }).join('');
+    const ultima = idx === perguntas.length - 1;
+    app.innerHTML =
+      '<div class="progress-wrap">' +
+        '<div class="progress-text">Pergunta ' + (idx+1) + ' de ' + perguntas.length + '</div>' +
+        '<div class="progress-bar"><div class="progress-fill" style="width:' +
+          (((idx+1)/perguntas.length)*100) + '%"></div></div>' +
+      '</div>' +
+      '<div class="card">' +
+        '<div class="qnum">Pergunta ' + p.n + '</div>' +
+        '<div class="enunciado">' + enun + '</div>' +
+        '<div class="opcoes">' + ops + '</div>' +
+      '</div>' +
+      '<div class="nav">' +
+        '<button class="nav-btn" onclick="anterior()">' + (idx===0?'Voltar':'Anterior') + '</button>' +
+        '<button class="nav-btn primary" onclick="proxima()"' +
+          (respostas[idx]===null?' disabled':'') + '>' + (ultima?'Enviar respostas':'Próxima') + '</button>' +
+      '</div>';
+  }
+
+  function selecionar(i){ respostas[idx] = i; renderQuiz(); }
+  function anterior(){
+    if(idx > 0){ idx--; renderQuiz(); }
+    else { tela = 'intro'; render(); }
+  }
+  function proxima(){
+    if(respostas[idx] === null) return;
+    if(idx < perguntas.length - 1){ idx++; renderQuiz(); }
+    else { enviar(); }
+  }
+
+  // ===== Pontuação (idêntica ao instrumento · Política de Definição de Perfil) =====
+  function classificar(score){
+    if(score <= 2.80) return 0;
+    if(score <= 3.30) return 1;
+    if(score <= 3.81) return 2;
+    if(score <= 4.22) return 3;
+    if(score <= 4.73) return 4;
+    return 5;
+  }
+
+  function calcularResultado(){
+    const pts = perguntas.map((p,i) => respostas[i]===null ? null : p.pontos[respostas[i]]);
+    if(pts.some(v => v === null)) return null;
+    const mediaB = (pts[0]+pts[1]+pts[2]+pts[3]+pts[4]) / 5;
+    const mediaA = (pts[5]+pts[6]) / 2;
+    const C = pts[7];
+    const final = mediaB*0.60 + mediaA*0.30 + C*0.10;
+    let i = classificar(final);
+    const perfilBruto = perfis[i];
+    const vetos = [];
+    if(respostas[5] === 2){ if(i > 1) i = 1; vetos.push('P6 "Em menos de 3 anos" -> teto Conservador II'); }
+    if(respostas[5] === 4){ if(i > 3) i = 3; vetos.push('P6 "Daqui a 3 a 5 anos" -> teto Moderado II'); }
+    if(respostas[6] === 1){ if(i > 2) i = 2; vetos.push('P7 "Renda muito instável" -> teto Moderado I'); }
+    let cred = 'não se aplica';
+    if(mediaB >= 4.5 && C === 1){
+      if(i > 0) i = i - 1;
+      cred = 'aplicado — desceu um perfil (tolerância alta declarada sem experiência real em crise)';
+    }
+    return { pts, mediaB, mediaA, C, final, perfilBruto,
+      veto: vetos.length ? vetos.join(' · ') : 'nenhum', cred, perfilFinal: perfis[i] };
+  }
+
+  function montarPayload(){
+    const r = calcularResultado();
+    const respDetalhe = perguntas.map((p,i) => ({
+      q: p.n, opcao: p.opcoes[respostas[i]], pontos: r.pts[i]
+    }));
+    return {
+      nome: cliente.nome,
+      contato: cliente.contato,
+      respostas: respDetalhe,
+      media_b: Number(r.mediaB.toFixed(2)),
+      media_a: Number(r.mediaA.toFixed(2)),
+      bloco_c: r.C,
+      pontuacao_final: Number(r.final.toFixed(2)),
+      perfil_bruto: r.perfilBruto,
+      veto: r.veto,
+      credibilidade: r.cred,
+      perfil_final: r.perfilFinal,
+      origem: 'formulario_autoaplicacao',
+      user_agent: navigator.userAgent
+    };
+  }
+
+  function corpoEmail(){
+    const r = calcularResultado();
+    let t = 'Perfil de Investidor (autoaplicação)%0D%0A%0D%0A';
+    t += 'Nome: ' + cliente.nome + '%0D%0A';
+    t += 'Contato: ' + cliente.contato + '%0D%0A%0D%0ARespostas:%0D%0A';
+    perguntas.forEach((p,i) => { t += '- P' + p.n + ': ' + p.opcoes[respostas[i]] + ' (' + r.pts[i] + ' pts)%0D%0A'; });
+    t += '%0D%0APontuação final: ' + r.final.toFixed(2) + '%0D%0A';
+    t += 'Perfil (a conferir pelo Victor): ' + r.perfilFinal + '%0D%0A';
+    return t.replace(/ /g,'%20');
+  }
+
+  function enviar(){
+    tela = 'enviando'; render();
+    const payload = montarPayload();
+    fetch(SUPABASE_URL, {
+      method:'POST',
+      headers:{
+        'apikey': SUPABASE_ANON,
+        'Authorization': 'Bearer ' + SUPABASE_ANON,
+        'Content-Type':'application/json',
+        'Prefer':'return=minimal'
+      },
+      body: JSON.stringify(payload)
+    }).then(function(resp){
+      if(resp.ok){ tela = 'enviado'; render(); }
+      else { throw new Error('status ' + resp.status); }
+    }).catch(function(){
+      // fallback: abre e-mail pré-preenchido para o Victor
+      tela = 'erro'; render();
+    });
+  }
+
+  function renderEnviando(){
+    app.innerHTML = '<div class="final"><div class="spin"></div>' +
+      '<h2 style="margin-top:18px">Enviando...</h2>' +
+      '<p>Só um instante.</p></div>';
+  }
+
+  function renderEnviado(){
+    app.innerHTML = '<div class="final">' +
+      '<div class="ok">&#10003;</div>' +
+      '<h2>Recebido, ' + esc(cliente.nome.split(' ')[0]) + '!</h2>' +
+      '<p>Obrigado por responder. O Victor vai analisar o seu perfil e falar com você para apresentar o seu diagnóstico. Pode fechar esta página.</p>' +
+      '</div>';
+  }
+
+  function renderErro(){
+    const link = 'mailto:' + EMAIL_FALLBACK + '?subject=Perfil%20de%20Investidor%20-%20' +
+      encodeURIComponent(cliente.nome) + '&body=' + corpoEmail();
+    app.innerHTML = '<div class="final">' +
+      '<h2>Quase lá</h2>' +
+      '<p style="margin-bottom:20px">Não consegui enviar automaticamente agora. É só tocar no botão abaixo para mandar as suas respostas ao Victor por e-mail.</p>' +
+      '<a class="nav-btn primary" style="text-decoration:none;display:inline-block" href="' + link + '">Enviar por e-mail</a>' +
+      '</div>';
+  }
+
+  render();
+</script>
+</body>
+</html>
