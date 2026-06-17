@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diagnóstico de Planejamento · Victor Faleiros</title>
+<style>
+  :root{
+    --bg:#f4f1ea; --card:#ffffff; --ink:#2a2620; --muted:#8a8377;
+    --line:#e4ddcf; --accent:#9c7b43; --accent-soft:#f6efde; --alerta:#a8442f;
+    --positivo:#5f7a4e;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);line-height:1.55;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto;padding:30px 22px 64px}
+  header{text-align:center;padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:24px}
+  header h1{font-family:Georgia,"Times New Roman",serif;font-size:23px;font-weight:600;letter-spacing:.2px}
+  header p{color:var(--muted);font-size:14px;margin-top:6px}
+  .progress-wrap{margin-bottom:18px}
+  .progress-text{font-size:12px;color:var(--muted);letter-spacing:.7px;text-transform:uppercase;margin-bottom:8px}
+  .progress-bar{height:4px;background:var(--line);border-radius:2px;overflow:hidden}
+  .progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width .3s ease}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:30px 30px 26px;box-shadow:0 1px 3px rgba(0,0,0,.03)}
+  .secao-nome{font-size:12px;font-weight:700;color:var(--accent);letter-spacing:.8px;
+    text-transform:uppercase;margin-bottom:8px}
+  .secao-titulo{font-family:Georgia,serif;font-size:21px;font-weight:600;margin-bottom:6px}
+  .secao-sub{color:var(--muted);font-size:14.5px;margin-bottom:22px}
+  .campo{margin-bottom:18px}
+  .campo:last-child{margin-bottom:4px}
+  .campo label{display:block;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:7px}
+  .campo .req{color:var(--accent);margin-left:2px}
+  .campo .hint{display:block;font-size:12.5px;font-weight:400;color:var(--muted);margin-top:3px}
+  .campo input,.campo select,.campo textarea{width:100%;font-family:inherit;font-size:15.5px;
+    padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);
+    outline:none;transition:border-color .15s;-webkit-appearance:none;appearance:none}
+  .campo textarea{min-height:96px;resize:vertical;line-height:1.5}
+  .campo input:focus,.campo select:focus,.campo textarea:focus{border-color:var(--accent)}
+  .campo select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' fill='none' stroke='%238a8377' stroke-width='1.6'/></svg>");
+    background-repeat:no-repeat;background-position:right 15px center;padding-right:38px;cursor:pointer}
+  .campo select.placeholder{color:var(--muted)}
+  .com-prefixo{position:relative;display:flex;align-items:center}
+  .com-prefixo .rs{position:absolute;left:14px;color:var(--muted);font-size:15px;pointer-events:none}
+  .com-prefixo input{padding-left:38px}
+  .com-sufixo{position:relative;display:flex;align-items:center}
+  .com-sufixo .un{position:absolute;right:16px;color:var(--muted);font-size:14.5px;pointer-events:none}
+  .com-sufixo input{padding-right:54px}
+  .erro{color:var(--alerta);font-size:13.5px;margin-top:10px;min-height:18px}
+  .nav{display:flex;justify-content:space-between;margin-top:22px;gap:12px}
+  .nav-btn{font-family:inherit;font-size:15px;padding:12px 26px;border-radius:9px;cursor:pointer;
+    border:1.5px solid var(--line);background:#fff;color:var(--ink);transition:.15s}
+  .nav-btn:hover:not(:disabled){border-color:#c9bda0}
+  .nav-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+  .nav-btn.primary:hover:not(:disabled){background:#876835}
+  .nav-btn:disabled{opacity:.38;cursor:not-allowed}
+  .intro p.lead{font-size:16px;margin-bottom:8px}
+  .intro .nota{font-size:14px;color:var(--muted);margin-bottom:22px}
+  .final{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:40px 34px;text-align:center}
+  .final .ok{font-size:46px;line-height:1;color:var(--positivo);margin-bottom:14px}
+  .final h2{font-family:Georgia,serif;font-size:23px;margin-bottom:10px}
+  .final p{color:var(--muted);font-size:15.5px;max-width:480px;margin:0 auto}
+  .spin{display:inline-block;width:22px;height:22px;border:3px solid var(--line);
+    border-top-color:var(--accent);border-radius:50%;animation:r .8s linear infinite}
+  @keyframes r{to{transform:rotate(360deg)}}
+  footer{text-align:center;color:var(--muted);font-size:12px;margin-top:26px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Diagnóstico de Planejamento</h1>
+    <p>Algumas informações para o Victor montar o seu plano antes da conversa.</p>
+  </header>
+  <main id="app"></main>
+  <footer>Planejamento Financeiro · Victor Faleiros</footer>
+</div>
+<script>
+  // ===== Config de envio (Supabase, projeto vfaleiros · anon só INSERT) =====
+  const SUPABASE_URL = 'https://oumcsjqiuitzosrgnhbr.supabase.co/rest/v1/diagnostico_respostas';
+  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im91bWNzanFpdWl0em9zcmduaGJyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAwNTM5MzQsImV4cCI6MjA5NTYyOTkzNH0.WooEUe4Jes5TjQXuc-zQdYwdgG13ZBm5wR_FzSU_gWA';
+  const EMAIL_FALLBACK = 'victorfaleiros@outlook.com';
+
+  // ===== Listas de opções =====
+  const ESTADO_CIVIL = [
+    'Solteiro(a)',
+    'Casado(a) ou união estável',
+    'Divorciado(a)',
+    'Viúvo(a)'
+  ];
+  const FAIXAS_PATRIMONIO = [
+    'Até R$ 100 mil',
+    'R$ 100 mil a R$ 250 mil',
+    'R$ 250 mil a R$ 500 mil',
+    'R$ 500 mil a R$ 1 milhão',
+    'R$ 1 milhão a R$ 3 milhões',
+    'R$ 3 milhões a R$ 5 milhões',
+    'Acima de R$ 5 milhões',
+    'Prefiro falar na reunião'
+  ];
+  const FAIXAS_IMOBILIZADO = ['Não tenho'].concat(FAIXAS_PATRIMONIO);
+  const ESTABILIDADE = [
+    'Estável (CLT, servidor público, aposentadoria)',
+    'Variável, mas previsível na média (autônomo experiente, empresário com fluxo estável)',
+    'Muito instável (comissões muito variáveis, sem previsibilidade)',
+    'Múltiplas fontes estáveis ou renda passiva relevante'
+  ];
+
+  // ===== Estrutura do formulário (3 etapas) =====
+  const etapas = [
+    { nome:'Você hoje', titulo:'O seu retrato de hoje', sub:'Um retrato rápido do seu momento atual. Ordem de grandeza já basta nos patrimônios.',
+      campos:[
+        { id:'idade', label:'A sua idade hoje', tipo:'numero', sufixo:'anos', min:16, max:100, required:true },
+        { id:'estado_civil', label:'Estado civil', tipo:'select', opcoes:ESTADO_CIVIL },
+        { id:'dependentes', label:'Filhos ou dependentes', tipo:'texto', placeholder:'Ex.: 2 filhos, de 8 e 12 anos. Ou: nenhum' },
+        { id:'patrimonio_financeiro', label:'Quanto você tem investido hoje', tipo:'select', opcoes:FAIXAS_PATRIMONIO, hint:'Uma ordem de grandeza já basta.' },
+        { id:'patrimonio_imobilizado', label:'Imóveis e outros bens', tipo:'select', opcoes:FAIXAS_IMOBILIZADO },
+        { id:'renda_atual', label:'A sua renda mensal aproximada', tipo:'dinheiro' },
+        { id:'estabilidade_renda', label:'Como é a previsibilidade dessa renda', tipo:'select', opcoes:ESTABILIDADE },
+        { id:'aporte_mensal', label:'Quanto você consegue investir por mês', tipo:'dinheiro', hint:'De forma consistente, todo mês.', required:true }
+      ] },
+    { nome:'O destino', titulo:'Aonde você quer chegar', sub:'O ponto que vamos mirar no seu plano. Pense em valores de hoje.',
+      campos:[
+        { id:'idade_alvo', label:'Com que idade você quer ter a liberdade de parar, se quiser', tipo:'numero', sufixo:'anos', min:30, max:100, required:true },
+        { id:'renda_desejada', label:'Que renda mensal, em valores de hoje, faria essa vida acontecer', tipo:'dinheiro', hint:'Pense no padrão de vida que você quer manter.', required:true },
+        { id:'objetivos', label:'O que você quer para o seu futuro?', tipo:'textarea', placeholder:'Conte, com as suas palavras, o que te trouxe até aqui e como você imagina essa fase da vida. (opcional)' }
+      ] },
+    { nome:'Mais contexto', titulo:'Mais contexto', sub:'Tudo aqui é opcional. Responda o que souber de cabeça; o resto a gente vê na conversa.', opcional:true,
+      campos:[
+        { id:'carteira_atual', label:'Como o seu dinheiro está investido hoje', tipo:'textarea', placeholder:'Por alto: bancos, corretoras, tipos de produto (poupança, CDB, fundos, ações, imóveis...).' },
+        { id:'seguros_previdencia', label:'Seguros e previdência que você já tem', tipo:'textarea', placeholder:'Seguro de vida, previdência privada (PGBL ou VGBL), plano de saúde...' },
+        { id:'dividas', label:'Financiamentos e dívidas relevantes', tipo:'textarea', placeholder:'Financiamento de imóvel ou carro, empréstimos, parcelamentos...' }
+      ] }
+  ];
+
+  // ===== Estado =====
+  let tela = 'intro';
+  let etapaIdx = 0;
+  let cliente = { nome:'', contato:'' };
+  let dados = {};
+  const app = document.getElementById('app');
+
+  function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function escAttr(s){ return esc(s).replace(/"/g,'&quot;'); }
+
+  // ===== Dinheiro (máscara BRL simples) =====
+  function soDigitos(s){ return String(s==null?'':s).replace(/\D/g,''); }
+  function formatBRL(s){
+    const d = soDigitos(s);
+    if(!d) return '';
+    return d.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  }
+  function numeroBRL(s){ const d = soDigitos(s); return d ? parseInt(d,10) : null; }
+
+  function render(){
+    if(tela === 'intro') return renderIntro();
+    if(tela === 'enviando') return renderEnviando();
+    if(tela === 'enviado') return renderEnviado();
+    if(tela === 'erro') return renderErro();
+    renderEtapa();
+  }
+
+  function renderIntro(){
+    app.innerHTML =
+      '<div class="card intro">' +
+        '<p class="lead">São algumas perguntas rápidas sobre o seu momento e os seus objetivos, leva uns 5 minutos. Não existe resposta certa ou errada: quanto mais real, melhor fica o seu plano.</p>' +
+        '<p class="nota">As suas respostas vão direto para o Victor. Ele usa esse retrato para montar o seu planejamento e apresenta tudo na conversa de vocês.</p>' +
+        '<div class="campo"><label for="nome">O seu nome</label>' +
+          '<input id="nome" type="text" autocomplete="name" placeholder="Nome e sobrenome" value="' + escAttr(cliente.nome) + '"></div>' +
+        '<div class="campo"><label for="contato">WhatsApp ou e-mail</label>' +
+          '<input id="contato" type="text" autocomplete="email" placeholder="(00) 00000-0000 ou seu@email.com" value="' + escAttr(cliente.contato) + '"></div>' +
+        '<div class="erro" id="erro-intro"></div>' +
+        '<div class="nav"><span></span>' +
+          '<button class="nav-btn primary" onclick="comecar()">Começar &rarr;</button></div>' +
+      '</div>';
+  }
+
+  function comecar(){
+    const nome = document.getElementById('nome').value.trim();
+    const contato = document.getElementById('contato').value.trim();
+    const erro = document.getElementById('erro-intro');
+    if(nome.length < 2){ erro.textContent = 'Por favor, preencha o seu nome.'; document.getElementById('nome').focus(); return; }
+    if(contato.length < 5){ erro.textContent = 'Deixe um WhatsApp ou e-mail para o Victor falar com você.'; document.getElementById('contato').focus(); return; }
+    cliente.nome = nome; cliente.contato = contato;
+    tela = 'etapa'; etapaIdx = 0; render();
+  }
+
+  function campoHTML(c){
+    const val = dados[c.id] == null ? '' : dados[c.id];
+    const req = c.required ? '<span class="req">*</span>' : '';
+    const hint = c.hint ? '<span class="hint">' + esc(c.hint) + '</span>' : '';
+    let controle = '';
+    if(c.tipo === 'numero'){
+      const un = c.sufixo ? '<span class="un">' + esc(c.sufixo) + '</span>' : '';
+      controle = '<div class="com-sufixo"><input id="f-' + c.id + '" type="number" inputmode="numeric" ' +
+        (c.min!=null?'min="'+c.min+'" ':'') + (c.max!=null?'max="'+c.max+'" ':'') +
+        'value="' + escAttr(val) + '">' + un + '</div>';
+    } else if(c.tipo === 'dinheiro'){
+      controle = '<div class="com-prefixo"><span class="rs">R$</span>' +
+        '<input id="f-' + c.id + '" type="text" inputmode="numeric" autocomplete="off" ' +
+        'value="' + escAttr(val) + '" oninput="this.value=formatBRL(this.value)"></div>';
+    } else if(c.tipo === 'select'){
+      const ph = (val === '' ? ' class="placeholder"' : '');
+      let ops = '<option value="" disabled' + (val===''?' selected':'') + '>Selecione</option>';
+      c.opcoes.forEach(function(o){
+        ops += '<option value="' + escAttr(o) + '"' + (val===o?' selected':'') + '>' + esc(o) + '</option>';
+      });
+      controle = '<select id="f-' + c.id + '"' + ph + ' onchange="this.classList.remove(\'placeholder\')">' + ops + '</select>';
+    } else if(c.tipo === 'textarea'){
+      controle = '<textarea id="f-' + c.id + '" placeholder="' + escAttr(c.placeholder||'') + '">' + esc(val) + '</textarea>';
+    } else {
+      controle = '<input id="f-' + c.id + '" type="text" placeholder="' + escAttr(c.placeholder||'') + '" value="' + escAttr(val) + '">';
+    }
+    return '<div class="campo"><label for="f-' + c.id + '">' + esc(c.label) + req + hint + '</label>' + controle + '</div>';
+  }
+
+  function renderEtapa(){
+    const et = etapas[etapaIdx];
+    const total = etapas.length;
+    const campos = et.campos.map(campoHTML).join('');
+    const ultima = etapaIdx === total - 1;
+    app.innerHTML =
+      '<div class="progress-wrap">' +
+        '<div class="progress-text">Etapa ' + (etapaIdx+1) + ' de ' + total + '</div>' +
+        '<div class="progress-bar"><div class="progress-fill" style="width:' + (((etapaIdx+1)/total)*100) + '%"></div></div>' +
+      '</div>' +
+      '<div class="card">' +
+        '<div class="secao-nome">' + esc(et.nome) + '</div>' +
+        '<div class="secao-titulo">' + esc(et.titulo) + '</div>' +
+        '<div class="secao-sub">' + esc(et.sub) + '</div>' +
+        campos +
+        '<div class="erro" id="erro-etapa"></div>' +
+      '</div>' +
+      '<div class="nav">' +
+        '<button class="nav-btn" onclick="anterior()">' + (etapaIdx===0?'Voltar':'Anterior') + '</button>' +
+        '<button class="nav-btn primary" onclick="proxima()">' + (ultima?'Enviar respostas':'Avançar') + '</button>' +
+      '</div>';
+  }
+
+  function lerEtapa(){
+    etapas[etapaIdx].campos.forEach(function(c){
+      const el = document.getElementById('f-' + c.id);
+      if(!el) return;
+      dados[c.id] = el.value.trim();
+    });
+  }
+
+  function validarEtapa(){
+    const erro = document.getElementById('erro-etapa');
+    const campos = etapas[etapaIdx].campos;
+    for(let k=0; k<campos.length; k++){
+      const c = campos[k];
+      if(!c.required) continue;
+      const v = dados[c.id];
+      if(v == null || v === ''){
+        if(erro) erro.textContent = 'Por favor, preencha: ' + c.label.toLowerCase() + '.';
+        const el = document.getElementById('f-' + c.id); if(el) el.focus();
+        return false;
+      }
+      if(c.tipo === 'numero'){
+        const n = parseInt(v, 10);
+        if(isNaN(n) || (c.min!=null && n<c.min) || (c.max!=null && n>c.max)){
+          if(erro) erro.textContent = 'Confira o valor de: ' + c.label.toLowerCase() + '.';
+          const el = document.getElementById('f-' + c.id); if(el) el.focus();
+          return false;
+        }
+      }
+      if(c.tipo === 'dinheiro'){
+        if(!numeroBRL(v)){
+          if(erro) erro.textContent = 'Confira o valor de: ' + c.label.toLowerCase() + '.';
+          const el = document.getElementById('f-' + c.id); if(el) el.focus();
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  function anterior(){
+    lerEtapa();
+    if(etapaIdx > 0){ etapaIdx--; render(); }
+    else { tela = 'intro'; render(); }
+  }
+
+  function proxima(){
+    lerEtapa();
+    if(!validarEtapa()) return;
+    if(etapaIdx < etapas.length - 1){ etapaIdx++; render(); }
+    else { enviar(); }
+  }
+
+  // ===== Montagem do envio =====
+  function valorCampo(id){ const v = dados[id]; return (v==null || v==='') ? null : v; }
+  function dinheiroSalvo(id){ const n = numeroBRL(dados[id]); return n==null ? null : 'R$ ' + formatBRL(String(n)); }
+  function inteiroSalvo(id){ const v = dados[id]; if(v==null||v==='') return null; const n = parseInt(v,10); return isNaN(n)?null:n; }
+
+  function composicaoFamiliar(){
+    const ec = valorCampo('estado_civil');
+    const dep = valorCampo('dependentes');
+    const partes = [];
+    if(ec) partes.push(ec);
+    if(dep) partes.push('Dependentes: ' + dep);
+    return partes.length ? partes.join('. ') : null;
+  }
+
+  function montarPayload(){
+    const respostas = {
+      idade: inteiroSalvo('idade'),
+      estado_civil: valorCampo('estado_civil'),
+      dependentes: valorCampo('dependentes'),
+      patrimonio_financeiro: valorCampo('patrimonio_financeiro'),
+      patrimonio_imobilizado: valorCampo('patrimonio_imobilizado'),
+      aporte_mensal: dinheiroSalvo('aporte_mensal'),
+      aporte_mensal_num: numeroBRL(dados['aporte_mensal']),
+      renda_atual: dinheiroSalvo('renda_atual'),
+      renda_atual_num: numeroBRL(dados['renda_atual']),
+      estabilidade_renda: valorCampo('estabilidade_renda'),
+      idade_alvo: inteiroSalvo('idade_alvo'),
+      renda_desejada: dinheiroSalvo('renda_desejada'),
+      renda_desejada_num: numeroBRL(dados['renda_desejada']),
+      objetivos: valorCampo('objetivos'),
+      carteira_atual: valorCampo('carteira_atual'),
+      seguros_previdencia: valorCampo('seguros_previdencia'),
+      dividas: valorCampo('dividas')
+    };
+    return {
+      nome: cliente.nome,
+      contato: cliente.contato,
+      respostas: respostas,
+      idade: respostas.idade,
+      composicao_familiar: composicaoFamiliar(),
+      patrimonio_financeiro: respostas.patrimonio_financeiro,
+      patrimonio_imobilizado: respostas.patrimonio_imobilizado,
+      aporte_mensal: respostas.aporte_mensal,
+      renda_atual: respostas.renda_atual,
+      estabilidade_renda: respostas.estabilidade_renda,
+      idade_alvo: respostas.idade_alvo,
+      renda_desejada: respostas.renda_desejada,
+      objetivos: respostas.objetivos,
+      carteira_atual: respostas.carteira_atual,
+      seguros_previdencia: respostas.seguros_previdencia,
+      dividas: respostas.dividas,
+      origem: 'formulario_diagnostico',
+      user_agent: (typeof navigator !== 'undefined' ? navigator.userAgent : '')
+    };
+  }
+
+  function corpoEmail(){
+    const linhas = [];
+    linhas.push('Diagnóstico de Planejamento (autoaplicação)');
+    linhas.push('');
+    linhas.push('Nome: ' + cliente.nome);
+    linhas.push('Contato: ' + cliente.contato);
+    linhas.push('');
+    linhas.push('-- Você hoje --');
+    if(inteiroSalvo('idade')!=null) linhas.push('Idade: ' + inteiroSalvo('idade') + ' anos');
+    if(composicaoFamiliar()) linhas.push('Família: ' + composicaoFamiliar());
+    if(valorCampo('patrimonio_financeiro')) linhas.push('Investido hoje: ' + valorCampo('patrimonio_financeiro'));
+    if(valorCampo('patrimonio_imobilizado')) linhas.push('Imóveis e bens: ' + valorCampo('patrimonio_imobilizado'));
+    if(dinheiroSalvo('aporte_mensal')) linhas.push('Aporte mensal: ' + dinheiroSalvo('aporte_mensal'));
+    if(dinheiroSalvo('renda_atual')) linhas.push('Renda mensal: ' + dinheiroSalvo('renda_atual'));
+    if(valorCampo('estabilidade_renda')) linhas.push('Estabilidade da renda: ' + valorCampo('estabilidade_renda'));
+    linhas.push('');
+    linhas.push('-- O destino --');
+    if(inteiroSalvo('idade_alvo')!=null) linhas.push('Idade-alvo: ' + inteiroSalvo('idade_alvo') + ' anos');
+    if(dinheiroSalvo('renda_desejada')) linhas.push('Renda desejada: ' + dinheiroSalvo('renda_desejada'));
+    if(valorCampo('objetivos')) linhas.push('Objetivos: ' + valorCampo('objetivos'));
+    linhas.push('');
+    linhas.push('-- Mais contexto --');
+    if(valorCampo('carteira_atual')) linhas.push('Carteira atual: ' + valorCampo('carteira_atual'));
+    if(valorCampo('seguros_previdencia')) linhas.push('Seguros e previdência: ' + valorCampo('seguros_previdencia'));
+    if(valorCampo('dividas')) linhas.push('Dívidas: ' + valorCampo('dividas'));
+    return encodeURIComponent(linhas.join('\n'));
+  }
+
+  function enviar(){
+    tela = 'enviando'; render();
+    const payload = montarPayload();
+    fetch(SUPABASE_URL, {
+      method:'POST',
+      headers:{
+        'apikey': SUPABASE_ANON,
+        'Authorization': 'Bearer ' + SUPABASE_ANON,
+        'Content-Type':'application/json',
+        'Prefer':'return=minimal'
+      },
+      body: JSON.stringify(payload)
+    }).then(function(resp){
+      if(resp.ok){ tela = 'enviado'; render(); }
+      else { throw new Error('status ' + resp.status); }
+    }).catch(function(){
+      tela = 'erro'; render();
+    });
+  }
+
+  function renderEnviando(){
+    app.innerHTML = '<div class="final"><div class="spin"></div>' +
+      '<h2 style="margin-top:18px">Enviando...</h2>' +
+      '<p>Só um instante.</p></div>';
+  }
+
+  function renderEnviado(){
+    app.innerHTML = '<div class="final">' +
+      '<div class="ok">&#10003;</div>' +
+      '<h2>Recebido, ' + esc(cliente.nome.split(' ')[0]) + '!</h2>' +
+      '<p>Obrigado por compartilhar. O Victor vai usar essas informações para montar o seu planejamento e apresentar tudo na conversa de vocês. Pode fechar esta página.</p>' +
+      '</div>';
+  }
+
+  function renderErro(){
+    const link = 'mailto:' + EMAIL_FALLBACK + '?subject=Diagn%C3%B3stico%20de%20Planejamento%20-%20' +
+      encodeURIComponent(cliente.nome) + '&body=' + corpoEmail();
+    app.innerHTML = '<div class="final">' +
+      '<h2>Quase lá</h2>' +
+      '<p style="margin-bottom:20px">Não consegui enviar automaticamente agora. É só tocar no botão abaixo para mandar as suas respostas ao Victor por e-mail.</p>' +
+      '<a class="nav-btn primary" style="text-decoration:none;display:inline-block" href="' + link + '">Enviar por e-mail</a>' +
+      '</div>';
+  }
+
+  render();
+</script>
+</body>
+</html>
