@@ -1,353 +1,738 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Questionário de Perfil de Investidor · Victor Faleiros</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Perfil de investidor · Victor Faleiros</title>
+<meta name="description" content="Dez perguntas para o Victor Faleiros saber que carteira montar para você. Leva uns 5 minutos.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
 <style>
-  :root{
-    --bg:#f4f1ea; --card:#ffffff; --ink:#2a2620; --muted:#8a8377;
-    --line:#e4ddcf; --accent:#9c7b43; --accent-soft:#f6efde; --alerta:#a8442f;
-    --positivo:#5f7a4e;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--ink);line-height:1.55;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    -webkit-font-smoothing:antialiased}
-  .wrap{max-width:760px;margin:0 auto;padding:30px 22px 64px}
-  header{text-align:center;padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:24px}
-  header h1{font-family:Georgia,"Times New Roman",serif;font-size:23px;font-weight:600;letter-spacing:.2px}
-  header p{color:var(--muted);font-size:14px;margin-top:6px}
-  .progress-wrap{margin-bottom:18px}
-  .progress-text{font-size:12px;color:var(--muted);letter-spacing:.7px;text-transform:uppercase;margin-bottom:8px}
-  .progress-bar{height:4px;background:var(--line);border-radius:2px;overflow:hidden}
-  .progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width .3s ease}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
-    padding:30px 30px 26px;box-shadow:0 1px 3px rgba(0,0,0,.03)}
-  .qnum{font-size:12px;font-weight:700;color:var(--accent);letter-spacing:.8px;
-    text-transform:uppercase;margin-bottom:14px}
-  .enunciado p{font-size:17px;margin-bottom:12px}
-  .enunciado p:last-child{margin-bottom:0}
-  .grafico{margin:18px 0}
-  .grafico img{width:100%;border:1px solid var(--line);border-radius:8px;display:block}
-  .opcoes{margin-top:20px;display:flex;flex-direction:column;gap:10px}
-  .opcao{display:flex;align-items:flex-start;gap:13px;text-align:left;width:100%;
-    background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:15px 17px;
-    font-size:15.5px;color:var(--ink);cursor:pointer;font-family:inherit;line-height:1.5;
-    transition:border-color .15s,background .15s}
-  .opcao:hover{border-color:#c9bda0;background:#fdfcf9}
-  .opcao.sel{border-color:var(--accent);background:var(--accent-soft)}
-  .radio{flex:0 0 18px;width:18px;height:18px;border:2px solid #c4bba6;border-radius:50%;
-    margin-top:1px;position:relative;transition:border-color .15s}
-  .opcao.sel .radio{border-color:var(--accent)}
-  .opcao.sel .radio::after{content:"";position:absolute;inset:3px;background:var(--accent);border-radius:50%}
-  .nav{display:flex;justify-content:space-between;margin-top:22px;gap:12px}
-  .nav-btn{font-family:inherit;font-size:15px;padding:12px 26px;border-radius:9px;cursor:pointer;
-    border:1.5px solid var(--line);background:#fff;color:var(--ink);transition:.15s}
-  .nav-btn:hover:not(:disabled){border-color:#c9bda0}
-  .nav-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
-  .nav-btn.primary:hover:not(:disabled){background:#876835}
-  .nav-btn:disabled{opacity:.38;cursor:not-allowed}
-  .intro p.lead{font-size:16px;margin-bottom:8px}
-  .intro .nota{font-size:14px;color:var(--muted);margin-bottom:22px}
-  .campo{margin-bottom:16px}
-  .campo label{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:6px}
-  .campo input{width:100%;font-family:inherit;font-size:15.5px;padding:12px 14px;
-    border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);outline:none;transition:border-color .15s}
-  .campo input:focus{border-color:var(--accent)}
-  .erro{color:var(--alerta);font-size:13.5px;margin-top:4px;min-height:18px}
-  .final{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:40px 34px;text-align:center}
-  .final .ok{font-size:46px;line-height:1;color:var(--positivo);margin-bottom:14px}
-  .final h2{font-family:Georgia,serif;font-size:23px;margin-bottom:10px}
-  .final p{color:var(--muted);font-size:15.5px;max-width:480px;margin:0 auto}
-  .spin{display:inline-block;width:22px;height:22px;border:3px solid var(--line);
-    border-top-color:var(--accent);border-radius:50%;animation:r .8s linear infinite}
-  @keyframes r{to{transform:rotate(360deg)}}
-  footer{text-align:center;color:var(--muted);font-size:12px;margin-top:26px}
+/* ===== Tokens: os mesmos do deck "Plano Fernando Sandes" ===== */
+:root{
+  --bg:#0B1F33; --paper:#FFFFFF; --paper-2:#F3F5F8; --ink:#0B1F33; --ink-2:#44546A; --ink-3:#7C8797;
+  --line:#D9DFE7; --line-2:#EDF0F4; --accent:#0E6E8C; --accent-soft:#E1F0F5; --gold:#B7862B; --gold-soft:#F6EDDA; --red:#B5432E;
+  --fan-1:#BFD7F2; --fan-2:#6FA3E0; --fan-3:#1D4F91; --s1:#1D4F91; --s2:#E0762F;
+  /* seis caminhos, do mais conservador (B, frio e claro) ao mais arrojado (C, quente e escuro) */
+  --c-b:#3472BE; --c-f:#22428D; --c-d:#007681; --c-a:#845B00; --c-e:#C34A00; --c-c:#832E00;
+  --sombra:0 30px 80px rgba(0,0,0,.45);
+  --marcado:var(--accent-soft);
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#05101B; --paper:#0F1E2E; --paper-2:#16283A; --ink:#EEF3F8; --ink-2:#B8C4D2; --ink-3:#7F8EA0;
+  --line:#2A3B4E; --line-2:#1E2F42; --accent:#5DB9D6; --accent-soft:#12303D; --gold:#D9B45B; --gold-soft:#3A2F14; --red:#E58A76;
+  --fan-1:#1D3B63; --fan-2:#3F7AC2; --fan-3:#9CC3F0; --s1:#5B9BE0; --s2:#E9915A;
+  --c-b:#9BC9F6; --c-f:#5991ED; --c-d:#57C3CF; --c-a:#E1B850; --c-e:#F58B4B; --c-c:#DE602F;}}
+:root[data-theme="dark"]{
+  --bg:#05101B; --paper:#0F1E2E; --paper-2:#16283A; --ink:#EEF3F8; --ink-2:#B8C4D2; --ink-3:#7F8EA0;
+  --line:#2A3B4E; --line-2:#1E2F42; --accent:#5DB9D6; --accent-soft:#12303D; --gold:#D9B45B; --gold-soft:#3A2F14; --red:#E58A76;
+  --fan-1:#1D3B63; --fan-2:#3F7AC2; --fan-3:#9CC3F0; --s1:#5B9BE0; --s2:#E9915A;
+  --c-b:#9BC9F6; --c-f:#5991ED; --c-d:#57C3CF; --c-a:#E1B850; --c-e:#F58B4B; --c-c:#DE602F;}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:15px;line-height:1.4;min-height:100vh;min-height:100dvh;padding:12px 12px 56px}
+h1,h2,h3{font-family:"Manrope","IBM Plex Sans",system-ui,sans-serif;margin:0;line-height:1.12;text-wrap:balance;letter-spacing:-.015em}
+p{margin:0}
+.num{font-variant-numeric:tabular-nums}
+button,input{font:inherit;color:inherit}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+/* ===== Palco e lâmina ===== */
+.palco{display:flex;flex-direction:column;align-items:center;gap:14px}
+.lamina{position:relative;width:100%;max-width:560px;background:var(--paper);border-radius:4px;box-shadow:var(--sombra);padding:22px 20px 16px}
+.lamina.larga{max-width:880px}
+.barra{position:absolute;left:0;top:0;right:0;height:3px;background:var(--line-2);border-radius:4px 4px 0 0;overflow:hidden}
+.barra i{display:block;height:100%;width:0;background:var(--accent);transition:width .4s var(--ease)}
+.lamina.sem-barra .barra{display:none}
+.abaixo{font-size:12px;color:#B8C4D2;letter-spacing:.04em;display:flex;align-items:center;gap:12px;min-height:24px}
+.abaixo button{background:none;border:0;color:#B8C4D2;text-decoration:underline;text-underline-offset:3px;padding:8px 6px;cursor:pointer;min-height:44px}
+.abaixo .conf{display:flex;align-items:center;gap:6px;color:#EEF3F8}
+.abaixo .conf button{text-decoration:none;border:1px solid #2A3B4E;border-radius:3px;padding:6px 10px;min-height:36px;color:#EEF3F8}
+.abaixo .conf button.ap{background:#EEF3F8;color:#0B1F33;border-color:#EEF3F8}
+
+/* ===== Cabeçalho da lâmina (faixa .top do deck) ===== */
+.top{display:grid;grid-template-columns:1fr auto;column-gap:12px;align-items:start;border-bottom:2px solid var(--ink);padding-bottom:12px}
+.top>div{display:contents}
+.top .eyebrow{grid-column:1;align-self:center;margin-bottom:0}
+.top h2.titulo{grid-column:1 / -1;margin-top:8px}
+.eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:6px}
+h2.titulo{font-size:22px;font-weight:700;max-width:34ch;outline:none}
+h2.titulo .lead,h1 .lead{color:var(--accent)}
+.pill{display:inline-block;padding:3px 8px;border-radius:2px;font-size:11px;font-weight:600;letter-spacing:.04em;background:var(--accent-soft);color:var(--accent);white-space:nowrap;line-height:1.3}
+.pill.gold{background:var(--gold-soft);color:var(--gold)}
+.pill.grey{background:var(--paper-2);color:var(--ink-3)}
+.top .pill{grid-column:2;grid-row:1;justify-self:end}
+.apoio{color:var(--ink-2);margin-top:12px;font-size:15px;line-height:1.4}
+.small{font-size:12.5px;color:var(--ink-3)}
+.muted{color:var(--ink-2)}
+.foot{display:flex;justify-content:space-between;gap:12px;font-size:11px;color:var(--ink-3);letter-spacing:.05em;border-top:1px solid var(--line-2);padding-top:10px;margin-top:14px}
+
+/* ===== Revelação (.r do deck) ===== */
+.r{opacity:0;transform:translateY(10px)}
+.tela.on .r{animation:up .55s var(--ease) forwards;animation-delay:calc(var(--i,0) * 90ms)}
+@keyframes up{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.r{opacity:1;transform:none}.tela.on .r{animation:none}.barra i{transition:none}.lamina{transition:none}}
+.tela{display:none}
+.tela.on{display:block}
+
+/* ===== KPI ===== */
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.kpi{background:var(--paper-2);border-left:3px solid var(--accent);padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.kpi.gold{border-left-color:var(--gold)}
+.kpi .k{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-2);font-weight:600}
+.kpi .v{font-family:"Manrope",sans-serif;font-size:30px;font-weight:800;line-height:1.05;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kpi .v small{font-size:13px;font-weight:600;letter-spacing:.06em;margin-left:4px;color:var(--ink-2);font-family:"IBM Plex Sans",sans-serif;text-transform:uppercase}
+.kpi .d{font-size:12.5px;color:var(--ink-2)}
+
+/* ===== Callout ===== */
+.callout{background:var(--accent-soft);border-left:3px solid var(--accent);padding:12px 14px;margin-top:16px;line-height:1.45}
+.callout.gold{background:var(--gold-soft);border-left-color:var(--gold)}
+.callout.dark{background:var(--ink);color:var(--paper);border-left:0}
+.callout .eyebrow{margin-bottom:4px}
+
+/* ===== Campos ===== */
+.campo{margin-top:22px}
+.campo label.rot{display:block;font-size:13px;font-weight:600;color:var(--ink-2);margin-bottom:6px}
+.campo input{width:100%;height:48px;padding:0 12px;font-size:16px;border:1px solid var(--line);border-radius:3px;background:var(--paper);color:var(--ink)}
+.campo input::placeholder{color:var(--ink-3)}
+.campo input:focus{outline:2px solid var(--accent);outline-offset:0;border-color:var(--accent)}
+.seg{display:flex;gap:8px;margin-bottom:8px}
+.seg button{flex:1;min-height:44px;border:1px solid var(--line);background:var(--paper);border-radius:3px;font-weight:600;color:var(--ink-2);cursor:pointer;font-size:14px}
+.seg button[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+.erro{color:var(--gold);font-size:13px;margin-top:6px;font-weight:500}
+.erro:empty{display:none}
+.garantia{margin-top:12px;text-align:center}
+
+/* ===== Botões ===== */
+.btn{min-height:48px;padding:0 20px;border-radius:3px;border:0;background:var(--accent);color:#fff;font-weight:700;font-family:"Manrope",sans-serif;font-size:15px;cursor:pointer;letter-spacing:.01em}
+:root[data-theme="dark"] .btn{color:#05101B}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn{color:#05101B}}
+.btn:disabled{background:var(--paper-2);color:var(--ink-3);cursor:not-allowed}
+.btn.cheio{width:100%;margin-top:22px}
+.btn.txt{background:none;color:var(--accent);padding:0 8px;font-family:"IBM Plex Sans",sans-serif;font-weight:600}
+.nav{display:flex;justify-content:space-between;align-items:center;margin-top:18px;min-height:56px;gap:12px}
+.nav .btn:not(.txt){min-width:132px}
+.pre-nav{text-align:center;margin-top:14px}
+
+/* ===== Listas de opções (linhas de tabela do deck) ===== */
+fieldset{border:0;margin:0;padding:0;min-width:0}
+legend{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.lista{margin-top:14px;border-top:1px solid var(--line)}
+.op{display:flex;align-items:center;gap:12px;min-height:48px;padding:12px 10px 12px 12px;border-bottom:1px solid var(--line);border-left:3px solid transparent;cursor:pointer;position:relative;line-height:1.35;margin-left:-3px}
+.op.sep{border-top:2px solid var(--ink);margin-top:16px}
+.op input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.op .tx{flex:1;min-width:0}
+.op .tx b{font-weight:700;font-variant-numeric:tabular-nums}
+.op .tx .sub{display:block;font-size:12.5px;color:var(--ink-3);margin-top:1px}
+.op:has(.desc){padding-top:10px;padding-bottom:10px}
+.op .tx .nome{font-family:"Manrope",sans-serif;font-weight:700;font-size:15px;display:block}
+.op .tx .desc{display:block;color:var(--ink-2);font-size:13.5px;line-height:1.35;margin-top:1px}
+.op .tx:has(.pct){display:flex;align-items:baseline;gap:10px}
+.op .pct{font-family:"Manrope",sans-serif;font-weight:800;font-size:22px;letter-spacing:-.02em;flex:0 0 auto;min-width:96px;font-variant-numeric:tabular-nums;line-height:1}
+.op .pct.txt{font-size:15px;font-weight:700;letter-spacing:0}
+.op .reais{color:var(--ink-2);font-size:14px}
+.op .mk{flex:0 0 18px;width:18px;height:18px;border:1.5px solid var(--ink-3);border-radius:50%;position:relative}
+.op.multi .mk{border-radius:2px}
+.op:has(input:checked){background:var(--marcado);border-left-color:var(--accent)}
+.op:has(input:checked) .mk{border-color:var(--accent);background:var(--accent)}
+.op:has(input:checked) .mk::after{content:"";position:absolute;inset:4px;background:var(--paper);border-radius:inherit}
+.op.multi:has(input:checked) .mk::after{inset:3px 5px;border-radius:0;background:none;border:2px solid var(--paper);border-top:0;border-left:0;transform:rotate(40deg) translate(-1px,-2px);width:3px;height:8px}
+.op:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:-2px}
+.op.marcada{background:var(--marcado);border-left-color:var(--accent)}
+.op.marcada .mk{border-color:var(--accent);background:var(--accent)}
+.op.marcada .mk::after{content:"";position:absolute;inset:4px;background:var(--paper);border-radius:inherit}
+
+/* ===== Abertura ===== */
+.capa h1{font-size:34px;font-weight:800;margin-top:6px}
+.capa .apoio{margin-top:10px}
+.capa .foot{margin-top:22px}
+.retomada{margin-top:18px}
+.retomada h3{font-size:20px;font-weight:700}
+.retomada p{margin-top:8px;color:var(--ink-2)}
+.retomada .conf{margin-top:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.retomada .nav{flex-wrap:wrap}
+@media (max-width:759px){.retomada .nav .btn:not(.txt){width:100%}}
+
+/* ===== Tela 6: gráfico vivo ===== */
+.t6 .apoio{margin-top:10px;font-size:14px}
+.leitura{height:56px;margin-top:10px;display:flex;flex-direction:column;justify-content:center;gap:3px}
+.leitura .l1{display:flex;justify-content:space-between;align-items:center;min-height:24px}
+.leitura .mes{font-family:"Manrope",sans-serif;font-weight:700;font-size:15px}
+.leitura .l2{display:flex;flex-wrap:nowrap;gap:0 4px;font-size:13px;align-items:baseline;white-space:nowrap;overflow:hidden}
+@media (min-width:760px){.leitura .l2{font-size:14px;gap:0 6px}}
+.leitura .l2 .u{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:600;margin-left:2px}
+.leitura .cv{display:inline-flex;gap:3px;align-items:baseline;border-bottom:2px solid transparent;padding-bottom:1px}
+.leitura .cv.sel{border-bottom-color:var(--cor)}
+.leitura .cv i{font-style:normal;font-family:"Manrope",sans-serif;font-weight:800;color:var(--cor)}
+.leitura .cv b{font-weight:600;font-variant-numeric:tabular-nums}
+.leitura .sep{color:var(--ink-3)}
+.leitura .fim{min-height:24px;padding:0 6px;font-size:13px}
+.leitura .fim[hidden]{display:none}
+.palco-g{position:relative;margin-top:6px;outline-offset:4px;touch-action:pan-y;-webkit-user-select:none;user-select:none;cursor:crosshair}
+.palco-g svg{display:block;width:100%;height:236px;overflow:visible}
+.palco-g svg text{font-family:"IBM Plex Sans",system-ui,sans-serif;font-variant-numeric:tabular-nums;fill:var(--ink-3);font-size:11px}
+.palco-g svg .cam{fill:none;stroke-width:2;stroke:var(--cor);stroke-linejoin:round;stroke-linecap:round;transition:opacity .25s,stroke-width .25s}
+.palco-g svg .hit{fill:none;stroke:transparent;stroke-width:12;pointer-events:stroke;cursor:pointer}
+.palco-g.tem-sel svg .cam{opacity:.35}
+.palco-g.tem-sel svg .cam.sel{opacity:1;stroke-width:3}
+.palco-g.tem-previa svg .cam{opacity:.35}
+.palco-g.tem-previa svg .cam.previa{opacity:1;stroke-width:3}
+.palco-g svg .letra{font-family:"Manrope",sans-serif;font-weight:800;font-size:12px;fill:var(--cor);opacity:0;transition:opacity .4s}
+.palco-g.fim-anim svg .letra{opacity:1}
+.palco-g svg .faixa{fill:var(--ink);opacity:0;transition:opacity .5s}
+.palco-g.marcos-on svg .faixa{opacity:.035}
+.palco-g svg .faixa.aberta{opacity:.07}
+.palco-g svg .filete{stroke:var(--accent);stroke-width:1.5;opacity:0}
+.palco-g svg .filete.aberta{opacity:1}
+.palco-g svg .hair{stroke:var(--ink);stroke-width:1;opacity:.9}
+.palco-g svg .pt{fill:var(--cor);stroke:var(--paper);stroke-width:1.5}
+.marcos{position:relative;height:44px;margin-top:-2px;opacity:0;transition:opacity .5s}
+.marcos.on{opacity:1}
+.marco{position:absolute;top:0;width:44px;height:44px;margin-left:-22px;border:0;background:none;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.marco i{width:28px;height:28px;border-radius:50%;background:var(--paper);border:2px solid var(--accent);color:var(--accent);font-style:normal;font-weight:700;font-family:"Manrope",sans-serif;font-size:13px;display:flex;align-items:center;justify-content:center;transition:background .2s,color .2s}
+.marco[aria-expanded="true"] i{background:var(--accent);color:var(--paper)}
+.marco:focus-visible{outline:none}
+.marco:focus-visible i{outline:2px solid var(--accent);outline-offset:2px}
+.dica{margin-top:2px;text-align:center;opacity:0;transition:opacity .5s}
+.dica.on{opacity:1}
+.card-marco{margin-top:12px}
+.card-marco .tit{font-family:"Manrope",sans-serif;font-weight:700;font-size:17px;margin-top:2px}
+.card-marco p.tx{margin-top:6px;color:var(--ink-2);font-size:14px}
+.card-marco .quedas{margin-top:10px;font-size:13.5px}
+.card-marco .quedas .rot{color:var(--ink-2);display:block;margin-bottom:4px;font-size:12.5px}
+.card-marco .quedas .cv{display:inline-flex;gap:3px;align-items:baseline;margin-right:6px}
+.card-marco .quedas .cv i{font-style:normal;font-family:"Manrope",sans-serif;font-weight:800;color:var(--cor)}
+.card-marco .quedas .cv b{font-weight:600;font-variant-numeric:tabular-nums}
+.card-marco .acoes{margin-top:8px;display:flex;justify-content:flex-end}
+.pergunta{margin-top:20px}
+.pergunta h2.titulo{font-size:20px}
+.pergunta .apoio{margin-top:8px;font-size:14px}
+.cams{margin-top:12px;display:flex;flex-direction:column;gap:8px}
+.cam-k{position:relative;display:block;cursor:pointer;background:var(--paper-2);border-left:3px solid var(--cor);padding:10px 12px;line-height:1.35;transition:border-left-width .15s,background .15s;opacity:1}
+.cam-k input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.cam-k .l1{display:flex;align-items:baseline;gap:8px}
+.cam-k .letra{font-family:"Manrope",sans-serif;font-weight:800;font-size:24px;color:var(--cor);line-height:1;min-width:22px}
+.cam-k .k{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-2);font-weight:600}
+.cam-k .v{font-family:"Manrope",sans-serif;font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
+.cam-k .pill{margin-left:auto;visibility:hidden}
+.cam-k .l2,.cam-k .l3{display:block;font-size:13px;color:var(--ink-2);margin-top:4px}
+.cam-k .l2 b,.cam-k .l3 b{color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums}
+.cam-k:has(input:checked),.cam-k.marcada{background:var(--marcado);border-left-width:6px}
+.cam-k:has(input:checked) .pill,.cam-k.marcada .pill{visibility:visible}
+.cam-k:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+.t6 .cams .cam-k{opacity:0;transform:translateY(10px)}
+.t6 .cams.on .cam-k{animation:up .45s var(--ease) forwards;animation-delay:calc(var(--i,0) * 60ms)}
+.t6 .pergunta{opacity:0;transition:opacity .4s}
+.t6 .pergunta.on{opacity:1}
+.nota{margin-top:10px}
+.tabela{margin-top:10px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tabela th,.tabela td{white-space:nowrap}
+table{border-collapse:collapse;width:100%;font-size:12.5px}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--ink-2);font-weight:600;background:var(--paper-2)}
+td.r,th.r{text-align:right;white-space:nowrap}
+td .letra{font-family:"Manrope",sans-serif;font-weight:800;color:var(--cor)}
+.t6 .linha-tab{margin-top:8px;display:flex;justify-content:center}
+@media (prefers-reduced-motion:reduce){.t6 .cams .cam-k{opacity:1;transform:none;animation:none}.t6 .pergunta{opacity:1}.marcos,.dica{opacity:1}.palco-g svg .letra{opacity:1}}
+
+/* ===== Envio ===== */
+.envio{padding:28px 0 12px;text-align:left}
+.linha-cresce{height:2px;background:var(--line);margin-top:18px;overflow:hidden}
+.linha-cresce i{display:block;height:100%;width:0;background:var(--accent);animation:cresce 15s linear forwards}
+@keyframes cresce{to{width:100%}}
+@media (prefers-reduced-motion:reduce){.linha-cresce i{animation:none;width:40%}}
+.envio h2.titulo{font-size:26px}
+.envio h2.titulo.grande{font-size:30px;font-weight:800}
+.envio .apoio{margin-top:12px}
+
+/* ===== Computador ===== */
+@media (min-width:760px){
+  body{padding:28px 24px 64px}
+  .lamina{padding:30px 32px 20px}
+  h2.titulo{font-size:24px}
+  .capa h1{font-size:40px}
+  .btn.cheio{width:auto;min-width:200px}
+  .t6-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;align-items:start}
+  .t6-grid .pergunta{margin-top:0}
+  .t6-grid .pergunta h2.titulo{font-size:19px}
+  .palco-g svg{height:300px}
+}
+
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1 id="hd-title">Questionário de Perfil de Investidor</h1>
-    <p id="hd-sub">Oito perguntas rápidas para o Victor desenhar a carteira certa para você.</p>
-  </header>
-  <main id="app"></main>
-  <footer>Planejamento Financeiro · Victor Faleiros</footer>
-</div>
+<main class="palco">
+  <div class="lamina" id="lamina">
+    <div class="barra" aria-hidden="true"><i id="barra"></i></div>
+    <div id="telas"></div>
+  </div>
+  <div class="abaixo" id="abaixo"></div>
+</main>
+<div class="sr" aria-live="polite" id="anuncio"></div>
+<div class="sr" aria-live="polite" id="anuncio-leitura"></div>
+
 <script>
-  // ===== Config de envio (Supabase, projeto vfaleiros · anon só INSERT) =====
-  const SUPABASE_URL = 'https://oumcsjqiuitzosrgnhbr.supabase.co/rest/v1/perfil_respostas';
-  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im91bWNzanFpdWl0em9zcmduaGJyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAwNTM5MzQsImV4cCI6MjA5NTYyOTkzNH0.WooEUe4Jes5TjQXuc-zQdYwdgG13ZBm5wR_FzSU_gWA';
-  const EMAIL_FALLBACK = 'victorfaleiros@outlook.com';
+/* ======================================================================
+   Dados embutidos (assets/serie-out26.json e assets/marcos-out26.json)
+   ====================================================================== */
+const SERIE = {"B":{"serie":[100000,101395.69,102502.31,104149.59,105792.83,106887.81,107820.18,109334.67,110545.77,111933.44,112897.95,114013.6,115452.39,116795.15,118429.33,119820.3,120617.78,121410.31,122471.38,123901.9,125026.97,126203.77,126990.96,127444.62,128374.92,129531.07,130255.34,131200.22,132010.55,132134.41,132766.54,133861.61,134821.43,135311.25,137039.55,138123.33,138958.94,140395.21,141185.92,142207.46,143283.81,144629.1,146255.34,147202.31,148236.05,149620.56,150929.1,151244.5,151943.03,152999.29,153582.56,152866.22,154465.21,155481.23,156440.95,157633.31,157918.93,157757.03,157976.84,158515.61,160003.61,160199.66,159966.96,160189.71,160614.26,160958.85,161224.99,161716.99,161955.54,162620.08,162571.2,164248.89,165698.4,165862.49,166579.9,167933.12,168920.34,170190.0,171726.19,173427.69,175353.69,177146.71,178970.16,180301.64,181795.88,183541.44,185206.06,187814.72,189711.18,192502.63,194854.44,196777.33,198713.2,199736.94,201009.13,203933.49,206446.33,208194.74,209868.53,211501.76,212324.96,214500.15,216063.77,218705.96,220507.68,221517.74,223304.49,225100.09,225486.43,227769.94,229750.81,231781.53,234853.04,237913.84,240537.95,242937.54,245546.79,248228.0,251534.86,254525.48,257249.58],"mdd":-0.004664200000000118,"maxUnder":2,"fim":257249.5778550117},"F":{"serie":[100000,101357.38,102668.43,104696.77,106734.93,107517.66,108464.98,110398.65,111556.59,112993.48,114124.19,114915.18,116430.44,118013.78,120027.8,121384.67,122103.96,122525.88,123587.39,125392.1,126821.42,128293.48,129060.01,129272.47,130515.13,132353.55,133089.71,134119.64,135005.58,134486.99,134931.82,136424.39,137420.16,137881.94,140330.74,141635.71,142414.32,144648.82,145414.5,146544.23,147816.71,149200.73,151745.49,152801.68,154077.83,155853.16,157590.38,157762.55,158973.01,160215.79,160414.5,157658.22,160388.67,162118.9,163818.53,166020.4,166277.07,165546.64,165708.21,167120.65,169778.36,169765.43,169186.38,169718.18,170340.48,171069.39,171201.41,171449.06,171446.23,171827.49,171279.59,173132.17,174828.35,174841.52,175474.32,177303.46,177865.46,179076.15,180046.02,181823.24,184014.75,185839.67,187925.59,188922.57,190001.67,191879.21,193115.46,195786.45,197890.66,201087.03,203956.48,206019.64,207485.8,208045.91,208838.26,212923.74,216202.41,217515.51,219266.51,220970.3,221163.0,223416.18,225108.11,228341.14,230518.32,231156.73,232821.3,234679.19,234160.27,236631.28,238399.87,240662.28,244461.41,247979.63,250684.93,252589.76,255227.9,258119.67,261751.84,265480.1,268431.58],"mdd":-0.017182180000000047,"maxUnder":3,"fim":268431.5778595687},"D":{"serie":[100000,101202.0,102878.17,105530.87,108110.97,108298.83,109355.42,111966.58,113036.23,114512.96,116019.61,116254.29,117761.27,119749.24,122215.21,123454.38,124109.82,124031.47,125071.4,127327.23,129286.92,131144.93,131898.29,131757.21,133509.83,136338.72,137079.75,138221.29,139227.21,137767.04,137843.82,139936.05,140936.54,141418.54,144834.64,146469.32,147165.45,150529.2,151196.21,152463.88,153953.6,155156.41,159114.96,160293.39,161998.23,164272.72,166550.14,166584.53,168580.2,170052.08,169578.77,163698.03,168099.74,170940.97,173809.37,177491.96,177643.34,176067.65,176151.93,178973.9,183346.85,182995.63,181774.05,182919.79,183808.82,185279.79,185115.46,184980.02,184601.58,184415.3,183103.21,185046.36,187135.45,187174.13,187754.34,190237.3,189925.27,191084.57,191030.78,192989.22,195659.05,197519.4,199973.37,200596.98,201112.24,203299.72,203647.67,206285.68,208670.11,212426.08,216097.68,218384.02,219139.44,219154.61,219373.74,225265.53,229606.46,230174.95,232031.57,233873.86,233400.2,235606.37,237574.35,241675.87,244643.72,244731.54,246290.78,248041.74,246298.38,249171.8,250680.41,253610.88,258369.37,262542.51,265177.92,266489.47,269076.29,272380.64,276585.8,281647.53,285248.46],"mdd":-0.03736530701478957,"maxUnder":6,"fim":285248.4561065068},"A":{"serie":[100000,100926.56,102963.22,106375.61,109442.27,108975.54,110157.3,113492.81,114474.34,115962.14,117919.59,117625.46,119042.83,121438.03,124290.24,125363.05,125992.96,125485.51,126491.06,129107.95,131622.42,133852.12,134627.86,134158.57,136435.02,140220.82,140951.64,142169.55,143311.51,140969.18,140627.45,143378.14,144397.06,144946.5,149228.46,151246.07,151784.47,156268.27,156851.43,158289.97,160001.81,160794.22,166236.61,167507.82,169622.65,172421.0,175189.65,175186.62,177940.76,179591.76,178336.34,169177.35,175259.58,179245.11,183325.95,188432.52,188471.12,186089.69,186103.39,190513.46,196581.96,195904.53,193958.7,195896.05,197017.86,199298.01,198811.99,198332.69,197564.75,196660.85,194595.73,196584.42,199090.29,199269.15,199736.31,202762.24,201255.09,202402.91,201119.81,203428.64,206575.77,208380.16,211274.04,211686.66,211568.43,214142.38,213459.83,216000.51,218681.77,223040.73,227659.77,230159.95,230245.3,229814.79,229511.2,237352.91,242708.0,242509.45,244564.29,246513.09,245532.89,247638.77,249990.89,254940.68,258889.06,258324.0,259776.45,261337.42,258360.0,261677.86,262961.2,266718.88,272138.88,277053.56,279479.33,280392.25,282729.45,286385.64,291227.5,297772.07,302275.97],"mdd":-0.05798931663877793,"maxUnder":8,"fim":302275.96787111537},"E":{"serie":[100000,100532.27,102922.33,107223.46,110718.01,109539.2,110859.46,114963.23,115856.85,117325.64,119807.21,119016.8,120260.31,123062.48,126231.15,127088.17,127732.78,126873.79,127831.94,130714.5,133804.64,136388.28,137224.78,136457.0,139268.44,143968.48,144672.45,145927.86,147222.73,144074.58,143264.53,146730.43,147785.46,148451.22,153482.19,155938.02,156236.36,161818.15,162336.72,163982.21,165920.34,166051.65,173032.38,174361.55,176860.04,180201.15,183394.71,183473.26,186938.13,188708.13,186562.65,174030.73,181776.26,186919.29,192233.86,198660.88,198585.49,195470.94,195424.44,201585.99,209276.69,208301.95,205558.69,208476.75,209782.34,212924.49,212097.15,211337.86,210178.23,208400.06,205623.53,207605.94,210547.1,210995.16,211278.98,214699.61,211652.34,212836.72,210126.43,212974.07,216583.3,218227.71,221634.97,222037.67,221222.06,224263.07,222415.36,224791.64,227782.95,232782.35,238492.48,241192.41,240676.06,239924.38,239168.28,249087.98,255381.99,254412.42,256772.25,258790.85,257501.85,259452.32,262310.38,268072.98,273205.52,271879.85,273229.47,274513.0,270313.77,274116.5,275219.34,279972.38,285699.62,291447.14,293506.03,294259.02,296122.39,300056.26,305599.79,313772.53,319461.44],"mdd":-0.07777834173735632,"maxUnder":9,"fim":319461.44215676223},"C":{"serie":[100000,100138.08,102878.63,108067.46,111996.07,110088.91,111548.87,116429.67,117232.79,118681.64,121698.86,120396.83,121461.79,124678.3,128170.32,128804.43,129463.99,128244.33,129153.83,132306.37,135985.1,138932.95,139832.05,138754.87,142118.06,147766.66,148441.7,149735.35,151190.01,147195.34,145897.02,150102.31,151194.09,151981.23,157792.13,160708.32,160751.15,167488.17,167936.59,169800.87,171978.19,171398.36,180007.8,181396.75,184305.28,188227.97,191876.8,192044.87,196278.92,198174.79,195053.93,178868.22,188359.23,194734.35,201374.17,209229.42,209027.97,205112.7,204999.9,213068.62,222538.57,221232.45,217602.83,221607.31,223113.95,227215.25,226003.56,224930.25,223332.86,220575.68,217014.41,218980.71,222394.33,223141.23,223218.42,227064.12,222306.16,223526.19,219250.55,222676.6,226779.22,228241.97,232199.43,232589.76,231011.31,234552.18,231434.71,233625.26,236942.71,242620.56,249498.88,252407.97,251233.92,250134.64,248888.79,261030.7,268332.62,266514.98,269200.87,271288.49,269665.01,271437.17,274839.37,281473.06,287891.99,285726.79,286957.21,287928.8,282400.54,286719.93,287620.88,293445.12,299487.98,306128.99,307774.0,308348.19,309683.38,313906.9,320198.68,330129.28,337106.9],"mdd":-0.09742192843426623,"maxUnder":15,"fim":337106.90169816115}};
+const MARCOS = {"nota":"Marcos da década para os cartões do gráfico dos 6 caminhos. Datas e quedas conferidas em 14/10/2026 sobre a série real com a alocação vigente de out/26. Índice do ponto: 0 = valor inicial (R$ 100 mil, início de jan/2016), 1 = fim de jan/2016, ..., 120 = fim de dez/2025. 'inicio' é o ponto do pico antes da queda, 'pior' o ponto mais baixo, 'fim' o primeiro ponto em que a carteira volta ao pico. 'meses' = meses abaixo do pico = fim - inicio - 1, a MESMA regra do campo maxUnder da série e do gráfico (por isso o episódio de 2021-2022 conta 15 meses, não 16). 'quedaC' e 'mesesC' são do caminho C (o mais arrojado); 'quedaB' e 'mesesB' do caminho B (o mais conservador).","marcos":[{"id":"caminhoneiros-2018","inicio":28,"pior":30,"fim":32,"periodo":"maio e junho de 2018","titulo":"Greve dos caminhoneiros e ano de eleição","texto":"O país parou por dez dias, o dólar subiu e a bolsa caiu. Foi um susto curto: em três meses a carteira mais arrojada já tinha recuperado o que valia.","quedaC":-3.5,"mesesC":3,"quedaB":0.0,"mesesB":0},{"id":"pandemia-2020","inicio":49,"pior":51,"fim":54,"periodo":"fevereiro e março de 2020","titulo":"Pandemia","texto":"A maior queda da década. Em março de 2020 a bolsa brasileira caiu quase 30% no mês. A carteira mais arrojada caiu 9,7% e passou 4 meses abaixo do que valia; a mais conservadora caiu 0,5% e em 1 mês já tinha voltado.","quedaC":-9.7,"mesesC":4,"quedaB":-0.5,"mesesB":1},{"id":"juros-inflacao-2021-2022","inicio":65,"pior":70,"fim":81,"periodo":"de maio de 2021 a setembro de 2022","titulo":"Inflação alta, juros subindo e guerra","texto":"A inflação disparou, a Selic saiu de 2% para 13,75%, a bolsa caiu e a guerra na Ucrânia mexeu com o mundo inteiro. A queda foi menor que na pandemia, mas foi o período mais longo sem recuperar: a carteira mais arrojada passou 15 meses abaixo do que já tinha valido.","quedaC":-4.5,"mesesC":15,"quedaB":0.0,"mesesB":0},{"id":"fiscal-2024","inicio":107,"pior":108,"fim":111,"periodo":"novembro e dezembro de 2024","titulo":"Dólar a R$ 6 e juros longos disparando","texto":"A desconfiança com as contas públicas levou o dólar a R$ 6 e derrubou os títulos longos. Susto rápido: em três meses a carteira mais arrojada recuperou.","quedaC":-1.9,"mesesC":3,"quedaB":0.0,"mesesB":0}]};
 
-  // ===== Perguntas (mesma régua do instrumento da R1) =====
-  const perguntas = [
-    { n:1, imagem:null, pontos:[5,4,2,1,6,3],
-      enunciado:[`Pensando na sua vida em geral (carreira, projetos importantes, decisões grandes), como você costuma se comportar diante de situações de incerteza?`],
-      opcoes:[
-        `Geralmente sigo em frente confiante, mesmo sem ter todas as informações. Acho que esperar demais paralisa`,
-        `Avalio bastante antes de decidir, mas quando decido, sigo firme. Não fico revisitando a decisão`,
-        `Prefiro ambientes mais previsíveis. Quando preciso decidir com incerteza, sofro um pouco no processo`,
-        `Costumo evitar situações de muita incerteza. Prefiro caminhos mais seguros mesmo que o retorno seja menor`,
-        `Gosto de situações desafiadoras e até procuro algumas. Incerteza para mim é oportunidade`,
-        `Decido quando preciso, mas tenho recaídas de ansiedade depois, ficando revisitando se foi a escolha certa`] },
-    { n:2, imagem:null, pontos:[2,6,1,4,3,5],
-      enunciado:[`Pensei em 6 pessoas que poderiam ser meus clientes. Cada uma tem uma forma própria de se relacionar com o próprio dinheiro investido. Marque a pessoa cuja descrição mais se parece com você.`],
-      opcoes:[
-        `Pedro — confere a carteira algumas vezes por semana. Se vê uma queda pequena, já fica desconfortável e questiona se foi a escolha certa.`,
-        `Renata — quando vê uma queda, sua primeira reação é pensar em comprar mais. Para ela, queda é desconto, não problema.`,
-        `Helena — em conversas sobre dinheiro, costuma dizer "prefiro ganhar menos e dormir tranquila". Já recusou produtos rentáveis no passado por achar arriscados.`,
-        `Lucas — entende que o mercado oscila e segue o plano traçado mesmo em momentos ruins, mas não disfarça o desconforto quando o mês fecha negativo.`,
-        `Antônio — quando aparece algo novo no mercado, fica curioso e quer saber mais. Aceita correr risco em parte do dinheiro, desde que outra parte fique mais protegida.`,
-        `Carla — assume publicamente que tem perfil arrojado. Em conversas com amigos, defende investimentos de risco e tem prazer em ter parte relevante do patrimônio em ativos voláteis.`] },
-    { n:3, imagem:null, pontos:[4,6,2,5,1,3],
-      enunciado:[`Independentemente de já investir ou não, com que frequência você costuma acompanhar notícias sobre economia, mercado financeiro e investimentos?`],
-      opcoes:[
-        `Acompanho semanalmente, gosto de me manter informado sobre o que está acontecendo`,
-        `Quase nunca acompanho. Confio que quem cuida do meu dinheiro vai me avisar quando algo importante acontecer`,
-        `Acompanho todos os dias, gosto de saber em tempo real o que está acontecendo`,
-        `Acompanho ocasionalmente, quando algum assunto chama atenção na mídia geral`,
-        `Acompanho várias vezes ao dia, especialmente em momentos de turbulência`,
-        `Acompanho mensalmente, mais por curiosidade do que por necessidade`] },
-    { n:4, imagem:`R1-grafico-pergunta-2.png`, pontos:[6,5,4,3,2,1],
-      enunciado:[
-        `Cada uma das 6 linhas (A a F) do gráfico mostra como teria sido investir R$ 100.000 em janeiro de 2016 por 10 anos, sem aportes, em 6 carteiras de risco crescente. São dados reais de 2016 a 2025.`,
-        `As mais arrojadas renderam mais, mas oscilaram mais pelo caminho: caíram um pouco mais e, principalmente, ficaram mais tempo abaixo do topo. O número em vermelho é a maior queda de cada uma; a barra de baixo é quanto tempo cada uma ficou abaixo do topo anterior.`,
-        `Qual desses caminhos você toparia viver pelos próximos 10 anos do seu plano de investimentos?`],
-      opcoes:[`Caminho C`,`Caminho E`,`Caminho A`,`Caminho D`,`Caminho F`,`Caminho B`] },
-    { n:5, imagem:null, pontos:[2,1,6,5,3,4],
-      enunciado:[`Imagine que você tem R$ 500.000 investidos e abre o extrato do mês. Qual dessas situações faria você perder o sono à noite?`],
-      opcoes:[
-        `Ver o saldo em R$ 495.000 (queda de R$ 5.000)`,
-        `Ver qualquer queda no extrato, mesmo de poucos reais`,
-        `Nenhuma dessas oscilações me tiraria o sono`,
-        `Ver o saldo em R$ 470.000 (queda de R$ 30.000)`,
-        `Ver o saldo em R$ 485.000 (queda de R$ 15.000)`,
-        `Ver o saldo em R$ 450.000 (queda de R$ 50.000)`] },
-    { n:6, imagem:null, pontos:[3,6,1,5,2],
-      enunciado:[`Em quanto tempo você pretende começar a utilizar parte relevante destes recursos? (Não é sobre resgate de emergência, que você sempre pode fazer, mas sobre quando planeja usar de fato uma parte relevante.)`],
-      opcoes:[
-        `Daqui a 5 a 10 anos`,
-        `Daqui a mais de 20 anos`,
-        `Em menos de 3 anos`,
-        `Daqui a 10 a 20 anos`,
-        `Daqui a 3 a 5 anos`] },
-    { n:7, imagem:null, pontos:[5,1,6,3],
-      enunciado:[`Como você descreveria a previsibilidade da sua renda atual?`],
-      opcoes:[
-        `Renda fixa de fonte estável (CLT, servidor, aposentadoria)`,
-        `Renda muito instável (autônomo sem reserva, comissões muito variáveis)`,
-        `Múltiplas fontes de renda estáveis, ou renda passiva relevante`,
-        `Renda variável, mas previsível em média (autônomo experiente, empresário com fluxo estável)`] },
-    { n:8, imagem:null, pontos:[3,6,1,4,5],
-      enunciado:[`Você já estava investindo em renda variável (ações, fundos de ações, multimercados, ETFs, etc.) durante alguma destas crises de mercado?`],
-      opcoes:[
-        `Crise da pandemia (março de 2020)`,
-        `Crise financeira global (2008-2009), com ou sem outras crises`,
-        `Não estava investindo em nenhuma crise`,
-        `Crise política/fiscal brasileira (2015-2016)`,
-        `Mais de uma das crises acima (excluindo 2008)`] }
-  ];
+/* ======================================================================
+   Conteúdo (textos finais da espec de UX 3.0)
+   ====================================================================== */
+const VERSAO = '3.0';
+const CHAVE = 'perfil-v3';
+const SUPABASE_URL = 'https://oumcsjqiuitzosrgnhbr.supabase.co/rest/v1/formulario_respostas';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im91bWNzanFpdWl0em9zcmduaGJyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAwNTM5MzQsImV4cCI6MjA5NTYyOTkzNH0.WooEUe4Jes5TjQXuc-zQdYwdgG13ZBm5wR_FzSU_gWA';
+const ENVIO_LIMITE_MS = 15000;
+const EMAIL_RESERVA = 'victorfaleiros@outlook.com';
+const BLOCOS = {1:'Bloco 1 · Com o que você pode contar', 2:'Bloco 2 · Como você lida com oscilação', 3:'Bloco 3 · Sua experiência'};
+const BLOCO_NOME = {1:'Com o que você pode contar', 2:'Como você lida com oscilação', 3:'Sua experiência'};
+const ORDEM = ['C','E','A','D','F','B'];
+const COR = {C:'var(--c-c)',E:'var(--c-e)',A:'var(--c-a)',D:'var(--c-d)',F:'var(--c-f)',B:'var(--c-b)'};
 
-  const perfis = ['Conservador I','Conservador II','Moderado I','Moderado II','Sofisticado I','Sofisticado II'];
+const PERGUNTAS = {
+  1:{bloco:1,chave:'horizonte_uso',titulo:'Em quanto tempo você pretende começar a <span class="lead">usar esse dinheiro</span>?',apoio:'Uma parte relevante dele. Emergência não conta: essa você sempre pode sacar.',
+     opcoes:[{id:'hz_menos_3',html:'Em menos de <b>3</b> anos'},{id:'hz_3_5',html:'De <b>3 a 5</b> anos'},{id:'hz_5_10',html:'De <b>5 a 10</b> anos'},{id:'hz_mais_10',html:'Mais de <b>10</b> anos'}]},
+  2:{bloco:1,chave:'previsibilidade_renda',titulo:'Como é a <span class="lead">sua renda</span>?',apoio:'Isso diz até onde a carteira pode ousar.',
+     opcoes:[{id:'renda_estavel',html:'Estável: CLT, servidor, aposentadoria'},{id:'renda_variavel_previsivel',html:'Varia, mas é previsível na média<span class="sub">autônomo com clientela, empresa com fluxo estável</span>'},{id:'renda_instavel',html:'Muito instável, sem previsibilidade<span class="sub">comissões que mudam muito</span>'},{id:'renda_multiplas',html:'Várias fontes estáveis, ou uma renda passiva que já pesa'}]},
+  3:{bloco:1,chave:'reserva_emergencia',titulo:'Se a sua renda <span class="lead">parasse hoje</span>',apoio:'Por quanto tempo o dinheiro fácil de sacar cobriria as suas contas?',
+     opcoes:[{id:'reserva_nenhuma',html:'Não tenho uma reserva separada'},{id:'reserva_menos_3',html:'Menos de <b>3</b> meses'},{id:'reserva_3_6',html:'De <b>3 a 6</b> meses'},{id:'reserva_mais_6',html:'Mais de <b>6</b> meses'}]},
+  4:{bloco:1,chave:'dependencia_carteira',titulo:'O dinheiro investido <span class="lead">paga alguma conta</span> sua hoje?',apoio:'',
+     opcoes:[{id:'dep_vive',html:'Sim, vivo em parte ou totalmente da renda dele'},{id:'dep_complementa',html:'Às vezes complemento o mês com ele'},{id:'dep_nao',html:'Não, ele é só para o futuro'}]},
+  5:{bloco:2,chave:'t1',titulo:'Qual dessas pessoas <span class="lead">mais parece com você</span>?',apoio:'Quatro perguntas sobre como você reage quando o dinheiro oscila. Não tem resposta certa; tem a sua.',
+     opcoes:[
+       {id:'t1_pedro',html:'<span class="nome">Pedro</span><span class="desc">Confere a carteira várias vezes por semana. Uma queda pequena já o deixa desconfortável.</span>'},
+       {id:'t1_renata',html:'<span class="nome">Renata</span><span class="desc">Quando vê uma queda, pensa primeiro em comprar mais. Para ela, queda é desconto, não problema.</span>'},
+       {id:'t1_helena',html:'<span class="nome">Helena</span><span class="desc">Prefere ganhar menos e dormir tranquila. Já recusou produtos rentáveis por achar arriscados.</span>'},
+       {id:'t1_lucas',html:'<span class="nome">Lucas</span><span class="desc">Sabe que o mercado oscila e segue o plano, mas um mês negativo ainda incomoda.</span>'},
+       {id:'t1_antonio',html:'<span class="nome">Antônio</span><span class="desc">Gosta de novidade. Arrisca uma parte do dinheiro, desde que outra parte fique protegida.</span>'},
+       {id:'t1_carla',html:'<span class="nome">Carla</span><span class="desc">Se diz arrojada. Gosta de ter uma parte grande do patrimônio em ativos que oscilam bastante.</span>'}]},
+  7:{bloco:2,chave:'t3',titulo:'Até que <span class="lead">queda</span> você aguentaria?',apoio:'Imagine R$ 500 mil investidos. Num mês ruim, você abre o extrato. Até onde vai sem perder o sono nem mexer na carteira?',
+     opcoes:[
+       {id:'t3_nenhuma',html:'<span class="pct txt">Qualquer queda</span><span class="reais">me tira o sono</span>'},
+       {id:'t3_2',html:'<span class="pct">2%</span><span class="reais">uns R$ 10 mil</span>'},
+       {id:'t3_4',html:'<span class="pct">4%</span><span class="reais">uns R$ 20 mil</span>'},
+       {id:'t3_6',html:'<span class="pct">6%</span><span class="reais">uns R$ 30 mil</span>'},
+       {id:'t3_8',html:'<span class="pct">8%</span><span class="reais">uns R$ 40 mil</span>'},
+       {id:'t3_10',html:'<span class="pct">10%<small style="font-size:13px;font-weight:600;margin-left:4px">ou mais</small></span><span class="reais">R$ 50 mil para cima</span>'}]},
+  8:{bloco:2,chave:'t4',titulo:'Na última <span class="lead">queda forte</span>, o que você fez?',apoio:'Pense na última vez em que viu os seus investimentos caírem de verdade: 2020, 2022 ou outra.',
+     opcoes:[{id:'t4_nao_mexi_sofri',html:'Não mexi, mas passei mal com aquilo'},{id:'t4_comprei_mais',html:'Aproveitei e comprei mais'},{id:'t4_vendi_parte',html:'Vendi uma parte'},{id:'t4_nao_mexi_tranquilo',html:'Não mexi e segui o plano com tranquilidade'},{id:'t4_vendi_tudo',html:'Vendi tudo ou quase tudo para parar a perda'},{id:'t4_nunca_passei',html:'Nunca passei por uma queda forte investindo',sep:true}]},
+  '8b':{bloco:2,chave:'t4_hipotetico',titulo:'Então vamos <span class="lead">imaginar</span>.',apoio:'Os seus investimentos caem de verdade e ficam assim por alguns meses seguidos. O que você acha que faria?',
+     opcoes:[{id:'t4h_nao_mexi_sofri',html:'Não mexeria, mas passaria mal com aquilo'},{id:'t4h_comprei_mais',html:'Aproveitaria e compraria mais'},{id:'t4h_vendi_parte',html:'Venderia uma parte'},{id:'t4h_nao_mexi_tranquilo',html:'Não mexeria e seguiria o plano com tranquilidade'},{id:'t4h_vendi_tudo',html:'Venderia tudo ou quase tudo para parar a perda'}]},
+  9:{bloco:3,chave:'e1',multipla:true,titulo:'O que você <span class="lead">já teve</span> ou tem?',apoio:'Duas perguntas sobre o que você já viveu investindo. Marque tudo que se aplica.',
+     opcoes:[{id:'e1_poupanca_cdb',html:'Poupança ou CDB'},{id:'e1_tesouro_rf',html:'Tesouro Direto ou fundos de renda fixa'},{id:'e1_multimercado',html:'Fundos multimercado'},{id:'e1_acoes_fii_etf',html:'Ações, fundos imobiliários ou ETFs'},{id:'e1_exterior',html:'Investimentos no exterior'},{id:'e1_cripto_outros',html:'Cripto ou outros'},{id:'e1_nunca',html:'Nunca investi',sep:true,exclusiva:true}]},
+  10:{bloco:3,chave:'e2',titulo:'Em qual dessas crises você <span class="lead">já investia</span> em renda variável?',apoio:'Ações, fundos de ações, multimercados, ETFs. Se foi em mais de uma, marque a última opção.',
+     opcoes:[{id:'e2_nenhuma',html:'Em nenhuma delas'},{id:'e2_2020',html:'Pandemia, março de <b>2020</b>'},{id:'e2_2015_2016',html:'Crise brasileira de <b>2015</b> e <b>2016</b>'},{id:'e2_2008',html:'Crise de <b>2008</b> e <b>2009</b>'},{id:'e2_mais_de_uma',html:'Em mais de uma delas'}]}
+};
+const ROTULO = {horizonte_uso:'Quando vai usar',previsibilidade_renda:'Como é a sua renda',reserva_emergencia:'Se a renda parasse',dependencia_carteira:'O investido paga conta',t1:'Retrato',t2:'Seis caminhos',t3:'Queda que você topa',t4:'Na última queda forte',t4_hipotetico:'Se acontecesse',e1:'O que você já teve',e2:'Em qual crise já investia'};
+const SEQ = [0,1,2,3,4,5,6,7,8,'8b',9,10];
+const NUM = {1:1,2:2,3:3,4:4,5:5,6:6,7:7,8:8,'8b':8,9:9,10:10};
 
-  let tela = 'intro';
-  let idx = 0;
-  let respostas = perguntas.map(() => null);
-  let cliente = { nome:'', contato:'' };
-  const app = document.getElementById('app');
+/* ======================================================================
+   Utilidades
+   ====================================================================== */
+const $ = (s,el=document)=>el.querySelector(s);
+const $$ = (s,el=document)=>[...el.querySelectorAll(s)];
+const reduzido = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const MESES = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+const mesDe = i => { if(i<=0) return {m:0,a:2016}; return {m:(i-1)%12, a:2016+Math.floor((i-1)/12)}; };
+const nomeMes = i => { const d=mesDe(i); return MESES[d.m]+' de '+d.a; };
+const periodo = (i,f) => { const a=mesDe(i), b=mesDe(f); return a.a===b.a ? `${MESES[a.m]} a ${MESES[b.m]} de ${a.a}` : `${MESES[a.m]} de ${a.a} a ${MESES[b.m]} de ${b.a}`; };
+const fmtMil = v => 'R$ '+Math.round(v/1000)+' mil';
+const fmtReais = v => v<1000 ? 'R$ '+Math.round(v) : v<10000 ? 'R$ '+(v/1000).toFixed(1).replace('.',',')+' mil' : 'R$ '+Math.round(v/1000)+' mil';
+const fmtPct = v => (Math.abs(v)*100).toFixed(1).replace('.',',')+'%';
+const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const primeiroNome = n => (n||'').trim().split(/\s+/)[0] || '';
+function isoLocal(d){ const p=n=>String(n).padStart(2,'0'); const o=-d.getTimezoneOffset(); const s=o>=0?'+':'-'; return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}${s}${p(Math.floor(Math.abs(o)/60))}:${p(Math.abs(o)%60)}`; }
+const mesAno = () => { const d=new Date(); return MESES[d.getMonth()][0].toUpperCase()+MESES[d.getMonth()].slice(1)+' de '+d.getFullYear(); };
 
-  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-  function render(){
-    if(tela === 'intro') return renderIntro();
-    if(tela === 'enviando') return renderEnviando();
-    if(tela === 'enviado') return renderEnviado();
-    if(tela === 'erro') return renderErro();
-    renderQuiz();
+/* Números derivados da série (nada digitado) */
+const DERIV = {};
+for(const L of Object.keys(SERIE)){
+  const s=SERIE[L].serie; let topo=s[0], topoI=0, mdd=0, mddI=0, mddTopo=s[0];
+  let under=0, maxUnder=0, uIni=0, uFim=0, curIni=0;
+  for(let i=1;i<s.length;i++){
+    if(s[i]>=topo){ topo=s[i]; topoI=i; if(under>maxUnder){maxUnder=under; uIni=curIni; uFim=i;} under=0; }
+    else { if(under===0) curIni=topoI; under++; const dd=s[i]/topo-1; if(dd<mdd){mdd=dd; mddI=i; mddTopo=topo;} }
   }
+  if(under>maxUnder){maxUnder=under; uIni=curIni; uFim=s.length-1;}
+  DERIV[L]={fim:s[s.length-1], mdd, mddI, mddReais:mddTopo-s[mddI], meses:maxUnder, uIni, uFim};
+}
+function quedaNoMarco(L,m){ const s=SERIE[L].serie; let pico=-Infinity; for(let i=m.inicio;i<=m.pior;i++) pico=Math.max(pico,s[i]); let fundo=Infinity; for(let i=m.inicio;i<=m.fim;i++) fundo=Math.min(fundo,s[i]); return fundo/pico-1; }
+function rotuloCaminho(L){ const d=DERIV[L]; return `Caminho ${L}. R$ 100 mil viraram ${fmtMil(d.fim)}. Maior queda de ${fmtPct(d.mdd)}, ${fmtReais(d.mddReais)}, em ${nomeMes(d.mddI)}. ${d.meses} meses sem recuperar o que tinha, de ${periodo(d.uIni,d.uFim)}.`; }
 
-  function renderIntro(){
-    app.innerHTML =
-      '<div class="card intro">' +
-        '<p class="lead">São 8 perguntas rápidas, leva uns 5 minutos. Não existe resposta certa ou errada: quanto mais honesto, melhor fica o seu plano.</p>' +
-        '<p class="nota">Suas respostas vão direto para o Victor. O resultado do perfil é montado por ele e apresentado na conversa de vocês.</p>' +
-        '<div class="campo"><label for="nome">Seu nome</label>' +
-          '<input id="nome" type="text" autocomplete="name" placeholder="Nome e sobrenome" value="' + esc(cliente.nome) + '"></div>' +
-        '<div class="campo"><label for="contato">WhatsApp ou e-mail</label>' +
-          '<input id="contato" type="text" autocomplete="tel" placeholder="(00) 00000-0000 ou seu@email.com" value="' + esc(cliente.contato) + '">' +
-          '<div class="erro" id="erro-id"></div></div>' +
-        '<div class="nav"><span></span>' +
-          '<button class="nav-btn primary" onclick="comecar()">Começar &rarr;</button></div>' +
-      '</div>';
-  }
+/* ======================================================================
+   Estado e salvamento
+   ====================================================================== */
+const PARAMS = new URLSearchParams(location.search);
+function nomeDaUrl(){ const n=(PARAMS.get('nome')||'').trim(); if(!n||n.length>80) return ''; if(!/^[\p{L}\p{M}' .-]+$/u.test(n)) return ''; return n; }
+let armazenamentoOk = true;
+try { localStorage.setItem(CHAVE+'-teste','1'); localStorage.removeItem(CHAVE+'-teste'); } catch(e){ armazenamentoOk=false; }
 
-  function comecar(){
-    const nome = document.getElementById('nome').value.trim();
-    const contato = document.getElementById('contato').value.trim();
-    const erro = document.getElementById('erro-id');
-    if(nome.length < 2){ erro.textContent = 'Por favor, preencha o seu nome.'; document.getElementById('nome').focus(); return; }
-    if(contato.length < 5){ erro.textContent = 'Deixe um WhatsApp ou e-mail para o Victor falar com você.'; document.getElementById('contato').focus(); return; }
-    cliente.nome = nome; cliente.contato = contato;
-    tela = 'quiz'; idx = 0; render();
-  }
+function estadoNovo(){ const nu=nomeDaUrl(); return {v:VERSAO, nome:nu, nomeNaUrl:!!nu, contatoTipo:'whatsapp', contato:'', respostas:{}, tela:0, iniciadoEm:null, retomou:false, t2Visto:false, t2LeuMeses:false, t2MarcosAbertos:[]}; }
+let E = estadoNovo();
+let salvoAoAbrir = null;
+try { const raw = armazenamentoOk && localStorage.getItem(CHAVE); if(raw){ const s=JSON.parse(raw); if(s && s.v===VERSAO) salvoAoAbrir=s; } } catch(e){}
+let salvarT=null;
+function salvar(){ if(!armazenamentoOk) return; clearTimeout(salvarT); salvarT=setTimeout(()=>{ try{ localStorage.setItem(CHAVE, JSON.stringify(E)); }catch(e){} },250); }
+function apagarSalvo(){ clearTimeout(salvarT); try{ localStorage.removeItem(CHAVE); }catch(e){} }
 
-  function renderQuiz(){
-    const p = perguntas[idx];
-    let enun = '';
-    p.enunciado.forEach((par, i) => {
-      enun += '<p>' + esc(par) + '</p>';
-      if(i === 0 && p.imagem){
-        enun += '<div class="grafico"><img src="' + p.imagem + '" alt="Gráfico da Pergunta 2"></div>';
-      }
-    });
-    const ops = p.opcoes.map((o, i) => {
-      const sel = respostas[idx] === i ? ' sel' : '';
-      return '<button class="opcao' + sel + '" onclick="selecionar(' + i + ')">' +
-             '<span class="radio"></span><span>' + esc(o) + '</span></button>';
-    }).join('');
-    const ultima = idx === perguntas.length - 1;
-    app.innerHTML =
-      '<div class="progress-wrap">' +
-        '<div class="progress-text">Pergunta ' + (idx+1) + ' de ' + perguntas.length + '</div>' +
-        '<div class="progress-bar"><div class="progress-fill" style="width:' +
-          (((idx+1)/perguntas.length)*100) + '%"></div></div>' +
-      '</div>' +
-      '<div class="card">' +
-        '<div class="qnum">Pergunta ' + p.n + '</div>' +
-        '<div class="enunciado">' + enun + '</div>' +
-        '<div class="opcoes">' + ops + '</div>' +
-      '</div>' +
-      '<div class="nav">' +
-        '<button class="nav-btn" onclick="anterior()">' + (idx===0?'Voltar':'Anterior') + '</button>' +
-        '<button class="nav-btn primary" onclick="proxima()"' +
-          (respostas[idx]===null?' disabled':'') + '>' + (ultima?'Enviar respostas':'Próxima') + '</button>' +
-      '</div>';
-  }
+/* ======================================================================
+   Navegação
+   ====================================================================== */
+const lamina=$('#lamina'), telas=$('#telas'), barra=$('#barra'), abaixo=$('#abaixo');
+let telaAtual=0;
+function proxima(t){ if(t===8) return E.respostas.t4==='t4_nunca_passei' ? '8b' : 9; if(t==='8b') return 9; return t+1; }
+function anterior(t){ if(t===9) return E.respostas.t4==='t4_nunca_passei' ? '8b' : 8; if(t==='8b') return 8; return t-1; }
 
-  function selecionar(i){ respostas[idx] = i; renderQuiz(); }
-  function anterior(){
-    if(idx > 0){ idx--; renderQuiz(); }
-    else { tela = 'intro'; render(); }
-  }
-  function proxima(){
-    if(respostas[idx] === null) return;
-    if(idx < perguntas.length - 1){ idx++; renderQuiz(); }
-    else { enviar(); }
-  }
+function irPara(t){
+  if(typeof t==='string' && /^\d+$/.test(t)) t=parseInt(t,10);
+  telaAtual=t;
+  if(SEQ.includes(t) && t!==0){ E.tela=t; salvar(); }
+  if(t===0){ E.tela=0; salvar(); }
+  lamina.classList.toggle('larga', t===6);
+  lamina.classList.toggle('sem-barra', !(NUM[t]));
+  const n=NUM[t]||0; barra.style.width=(n*10)+'%';
+  telas.innerHTML='';
+  const sec=document.createElement('section'); sec.className='tela'; sec.dataset.tela=String(t);
+  if(t===0) sec.innerHTML=htmlAbertura();
+  else if(t===6) sec.innerHTML=htmlTela6();
+  else if(PERGUNTAS[t]) sec.innerHTML=htmlPergunta(t);
+  else if(t==='enviando') sec.innerHTML=htmlEnviando();
+  else if(t==='recebido') sec.innerHTML=htmlRecebido();
+  else if(t==='erro') sec.innerHTML=htmlErro();
+  telas.appendChild(sec);
+  // revelação em cascata
+  $$('.r',sec).forEach((el,i)=>el.style.setProperty('--i',String(i)));
+  void sec.offsetWidth; sec.classList.add('on');
+  ligar(sec,t);
+  renderAbaixo();
+  window.scrollTo({top:0,behavior:'instant' in window ? 'instant' : 'auto'});
+  const tit=$('h1, h2.titulo',sec); if(tit){ tit.setAttribute('tabindex','-1'); setTimeout(()=>tit.focus({preventScroll:true}),60); }
+  anunciar(t,sec);
+}
+function anunciar(t,sec){ const a=$('#anuncio'); const tit=($('h1, h2.titulo',sec)||{}).textContent||''; const p=PERGUNTAS[t]; let s=''; if(t===6) s=`Bloco 2 de 3, ${BLOCO_NOME[2]}. Pergunta 6 de 10. `; else if(p) s=`Bloco ${p.bloco} de 3, ${BLOCO_NOME[p.bloco]}. Pergunta ${NUM[t]} de 10${t==='8b'?', continuação':''}. `; a.textContent=''; setTimeout(()=>{a.textContent=s+tit;},80); }
 
-  // ===== Pontuação (idêntica ao instrumento · Política de Definição de Perfil) =====
-  function classificar(score){
-    if(score <= 2.80) return 0;
-    if(score <= 3.30) return 1;
-    if(score <= 3.81) return 2;
-    if(score <= 4.22) return 3;
-    if(score <= 4.73) return 4;
-    return 5;
-  }
+function renderAbaixo(){
+  const contadas = NUM[telaAtual] || telaAtual===0 && (E.tela>0 || temRespostas());
+  if(!contadas || !armazenamentoOk || telaAtual==='recebido'){ abaixo.innerHTML=''; return; }
+  abaixo.innerHTML='<button type="button" id="recomecar">Recomeçar</button>';
+  $('#recomecar').addEventListener('click',()=>{
+    abaixo.innerHTML='<span class="conf">Apagar tudo e começar de novo? <button type="button" class="ap" id="ap">Apagar</button><button type="button" id="ca">Cancelar</button></span>';
+    $('#ap').addEventListener('click',recomecar); $('#ca').addEventListener('click',renderAbaixo); $('#ap').focus();
+  });
+}
+function temRespostas(){ return Object.keys(E.respostas).length>0; }
+function recomecar(){ apagarSalvo(); salvoAoAbrir=null; E=estadoNovo(); t6Anim=null; irPara(0); }
 
-  function calcularResultado(){
-    const pts = perguntas.map((p,i) => respostas[i]===null ? null : p.pontos[respostas[i]]);
-    if(pts.some(v => v === null)) return null;
-    const mediaB = (pts[0]+pts[1]+pts[2]+pts[3]+pts[4]) / 5;
-    const mediaA = (pts[5]+pts[6]) / 2;
-    const C = pts[7];
-    const final = mediaB*0.60 + mediaA*0.30 + C*0.10;
-    let i = classificar(final);
-    const perfilBruto = perfis[i];
-    const vetos = [];
-    if(respostas[5] === 2){ if(i > 1) i = 1; vetos.push('P6 "Em menos de 3 anos" -> teto Conservador II'); }
-    if(respostas[5] === 4){ if(i > 3) i = 3; vetos.push('P6 "Daqui a 3 a 5 anos" -> teto Moderado II'); }
-    if(respostas[6] === 1){ if(i > 2) i = 2; vetos.push('P7 "Renda muito instável" -> teto Moderado I'); }
-    let cred = 'não se aplica';
-    if(mediaB >= 4.5 && C === 1){
-      if(i > 0) i = i - 1;
-      cred = 'aplicado — desceu um perfil (tolerância alta declarada sem experiência real em crise)';
+/* ======================================================================
+   Pedaços comuns
+   ====================================================================== */
+function htmlTopo(t,p){ const n=NUM[t]; const pill = t==='8b' ? `Pergunta ${n} de 10 · continuação` : `Pergunta ${n} de 10`; return `<div class="top r"><div><div class="eyebrow">${esc(BLOCOS[p.bloco])}</div><h2 class="titulo" id="titulo">${p.titulo}</h2></div><span class="pill">${pill}</span></div>`; }
+function htmlNav(t,label,ativo){ return `<div class="nav"><button type="button" class="btn txt" id="voltar">Voltar</button><button type="button" class="btn" id="avancar" ${ativo?'':'disabled'}>${label}</button></div>`; }
+function htmlFoot(t){ return `<div class="foot"><span>Victor Faleiros · Perfil de investimentos</span><span class="num">${NUM[t]} / 10</span></div>`; }
+function htmlOpcoes(p){
+  const tipo = p.multipla ? 'checkbox' : 'radio'; const atual = E.respostas[p.chave];
+  return `<fieldset class="lista r"><legend>${p.titulo.replace(/<[^>]+>/g,'')}</legend>${p.opcoes.map(o=>{
+    const marcada = p.multipla ? (Array.isArray(atual)&&atual.includes(o.id)) : atual===o.id;
+    return `<label class="op${p.multipla?' multi':''}${o.sep?' sep':''}${marcada?' marcada':''}"><input type="${tipo}" name="${p.chave}" value="${o.id}" ${marcada?'checked':''}><span class="tx">${o.html}</span><span class="mk" aria-hidden="true"></span></label>`;
+  }).join('')}</fieldset><p class="erro" id="erro" role="alert"></p>`;
+}
+
+/* ======================================================================
+   Tela 0: abertura
+   ====================================================================== */
+function htmlAbertura(){
+  const nome = primeiroNome(E.nome);
+  const sauda = nome ? `Olá, <span class="lead">${esc(nome)}</span>.` : 'Olá.';
+  let miolo;
+  if(salvoAoAbrir && salvoAoAbrir.tela && salvoAoAbrir.tela!==0){
+    const n = NUM[salvoAoAbrir.tela] || 1; const nm = primeiroNome(salvoAoAbrir.nome);
+    miolo = `<div class="retomada r"><h3>Bem-vindo de volta${nm?', <span class="lead">'+esc(nm)+'</span>':''}</h3><p>As suas respostas ficaram guardadas aqui no aparelho. Você parou na pergunta ${n} de 10.</p>
+      <div class="nav" style="justify-content:flex-start;gap:8px;margin-top:14px"><button type="button" class="btn" id="continuar">Continuar de onde parei</button><button type="button" class="btn txt" id="zerar">Recomeçar do zero</button></div><div id="conf-zerar"></div></div>`;
+  } else {
+    const wa = E.contatoTipo==='whatsapp';
+    miolo = `<div class="campo r"><label class="rot" for="nome">O seu nome</label><input id="nome" name="name" autocomplete="name" autocapitalize="words" placeholder="Nome e sobrenome" value="${esc(E.nome)}"><p class="erro" id="erro-nome" role="alert"></p></div>
+      <div class="campo r"><span class="rot" id="rot-contato">Como o Victor fala com você</span>
+        <div class="seg" role="group" aria-labelledby="rot-contato"><button type="button" id="seg-wa" aria-pressed="${wa}">WhatsApp</button><button type="button" id="seg-em" aria-pressed="${!wa}">E-mail</button></div>
+        <input id="contato" ${wa?'type="tel" inputmode="tel" autocomplete="tel-national" placeholder="(00) 00000-0000"':'type="email" inputmode="email" autocomplete="email" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="seu@email.com"'} value="${esc(E.contato)}" aria-label="${wa?'WhatsApp':'E-mail'}"><p class="erro" id="erro-contato" role="alert"></p></div>
+      <button type="button" class="btn cheio r" id="comecar">Começar</button>
+      ${armazenamentoOk?'<p class="small garantia r">Pode parar e voltar depois: as respostas ficam guardadas neste aparelho até você enviar.</p>':''}`;
+  }
+  return `<div class="capa">
+    <div class="eyebrow r">Perfil de investimentos</div>
+    <h1 class="r" id="titulo">${sauda}</h1>
+    <p class="apoio r">Dez perguntas para o Victor saber que carteira montar para você.</p>
+    <div class="kpis r"><div class="kpi"><span class="k">Perguntas</span><span class="v num">10</span></div><div class="kpi gold"><span class="k">Min</span><span class="v num">5</span><span class="d">sem resposta certa ou errada</span></div></div>
+    <p class="small r" style="margin-top:12px">O resultado o Victor apresenta na conversa de vocês. As respostas vão direto para ele.</p>
+    ${miolo}
+    <div class="foot"><span>Victor Faleiros</span><span>${mesAno()}</span></div>
+  </div>`;
+}
+function mascaraWa(v){ const d=v.replace(/\D/g,'').slice(0,11); if(!d) return ''; if(d.length<=2) return '('+d; const ddd=d.slice(0,2), r=d.slice(2); if(r.length<=4) return `(${ddd}) ${r}`; if(r.length<=8) return `(${ddd}) ${r.slice(0,4)}-${r.slice(4)}`; return `(${ddd}) ${r.slice(0,5)}-${r.slice(5)}`; }
+function ligarAbertura(sec){
+  const cont=$('#continuar',sec);
+  if(cont){
+    cont.addEventListener('click',()=>{ E = Object.assign(estadoNovo(), salvoAoAbrir, {retomou:true}); salvoAoAbrir=null; salvar(); irPara(E.tela); });
+    $('#zerar',sec).addEventListener('click',()=>{ $('#conf-zerar',sec).innerHTML='<div class="conf"><span class="muted">Apagar tudo e começar de novo?</span><button type="button" class="btn" style="min-height:40px" id="ap2">Apagar</button><button type="button" class="btn txt" id="ca2">Cancelar</button></div>'; $('#ap2',sec).addEventListener('click',recomecar); $('#ca2',sec).addEventListener('click',()=>{$('#conf-zerar',sec).innerHTML='';}); $('#ap2',sec).focus(); });
+    return;
+  }
+  const nome=$('#nome',sec), contato=$('#contato',sec);
+  nome.addEventListener('input',()=>{ E.nome=nome.value; $('#erro-nome',sec).textContent=''; salvar(); });
+  contato.addEventListener('input',()=>{ if(E.contatoTipo==='whatsapp'){ contato.value=mascaraWa(contato.value); } E.contato=contato.value; $('#erro-contato',sec).textContent=''; salvar(); });
+  const trocar = tipo => { if(E.contatoTipo===tipo) return; E.contatoTipo=tipo; E.contato=''; salvar(); irPara(0); setTimeout(()=>{ const c=$('#contato'); if(c) c.focus(); },80); };
+  $('#seg-wa',sec).addEventListener('click',()=>trocar('whatsapp'));
+  $('#seg-em',sec).addEventListener('click',()=>trocar('email'));
+  $('#comecar',sec).addEventListener('click',()=>{
+    const n=nome.value.trim(); const letras=(n.match(/\p{L}/gu)||[]).length;
+    if(letras<2){ $('#erro-nome',sec).textContent='Coloque o seu nome, para o Victor saber de quem é a resposta.'; nome.focus(); return; }
+    const c=contato.value.trim();
+    if(E.contatoTipo==='whatsapp'){ if(c.replace(/\D/g,'').length<10){ $('#erro-contato',sec).textContent='Confere o WhatsApp? Precisa do DDD, tipo (16) 99999-1234.'; contato.focus(); return; } }
+    else { if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(c)){ $('#erro-contato',sec).textContent='Confere o e-mail? Parece incompleto.'; contato.focus(); return; } }
+    E.nome=n; E.contato=c; if(!E.iniciadoEm) E.iniciadoEm=isoLocal(new Date()); salvar(); irPara(1);
+  });
+}
+
+/* ======================================================================
+   Telas de pergunta em lista (1 a 5, 7 a 10)
+   ====================================================================== */
+function htmlPergunta(t){
+  const p=PERGUNTAS[t]; const b2 = p.bloco===2; const label = t===10 ? 'Enviar' : (b2 ? 'Próxima' : 'Avançar');
+  const ativo = p.bloco===3 ? true : !!E.respostas[p.chave];
+  return `${htmlTopo(t,p)}${p.apoio?`<p class="apoio r">${p.apoio}</p>`:''}${htmlOpcoes(p)}${t===10?'<p class="small pre-nav">Ao enviar, as suas respostas vão só para o Victor.</p>':''}${htmlNav(t,label,ativo)}${htmlFoot(t)}`;
+}
+function ligarPergunta(sec,t){
+  const p=PERGUNTAS[t];
+  $$('input',sec).forEach(inp=>inp.addEventListener('change',()=>{
+    if(p.multipla){
+      const o=p.opcoes.find(x=>x.id===inp.value);
+      if(inp.checked && o.exclusiva){ $$('input',sec).forEach(x=>{ if(x!==inp) x.checked=false; }); }
+      else if(inp.checked){ const ex=$$('input',sec).find(x=>p.opcoes.find(y=>y.id===x.value).exclusiva); if(ex) ex.checked=false; }
+      E.respostas[p.chave]=$$('input',sec).filter(x=>x.checked).map(x=>x.value);
+      if(E.respostas[p.chave].length) $('#erro',sec).textContent='';
+    } else {
+      E.respostas[p.chave]=inp.value; $('#avancar',sec).disabled=false; $('#erro',sec).textContent='';
+      if(t===8 && inp.value!=='t4_nunca_passei') delete E.respostas.t4_hipotetico;
     }
-    return { pts, mediaB, mediaA, C, final, perfilBruto,
-      veto: vetos.length ? vetos.join(' · ') : 'nenhum', cred, perfilFinal: perfis[i] };
-  }
+    $$('.op',sec).forEach(l=>l.classList.toggle('marcada', $('input',l).checked));
+    salvar();
+  }));
+  $('#voltar',sec).addEventListener('click',()=>irPara(anterior(t)));
+  $('#avancar',sec).addEventListener('click',()=>{
+    if(t===9){ if(!Array.isArray(E.respostas.e1)||!E.respostas.e1.length){ $('#erro',sec).textContent='Marque pelo menos uma opção.'; return; } }
+    if(t===10){ if(!E.respostas.e2){ $('#erro',sec).textContent='Marque uma opção para enviar.'; return; } enviar(); return; }
+    if(!E.respostas[p.chave]) return;
+    irPara(proxima(t));
+  });
+}
 
-  function montarPayload(){
-    const r = calcularResultado();
-    const respDetalhe = perguntas.map((p,i) => ({
-      q: p.n, opcao: p.opcoes[respostas[i]], pontos: r.pts[i]
-    }));
-    return {
-      nome: cliente.nome,
-      contato: cliente.contato,
-      respostas: respDetalhe,
-      media_b: Number(r.mediaB.toFixed(2)),
-      media_a: Number(r.mediaA.toFixed(2)),
-      bloco_c: r.C,
-      pontuacao_final: Number(r.final.toFixed(2)),
-      perfil_bruto: r.perfilBruto,
-      veto: r.veto,
-      credibilidade: r.cred,
-      perfil_final: r.perfilFinal,
-      origem: 'formulario_autoaplicacao',
-      user_agent: navigator.userAgent
-    };
-  }
+/* ======================================================================
+   Tela 6: os seis caminhos
+   ====================================================================== */
+function htmlCartoes(){
+  const atual=E.respostas.t2;
+  return ORDEM.map((L,i)=>{ const d=DERIV[L]; const id='t2_'+L.toLowerCase(); const m=atual===id;
+    return `<label class="cam-k${m?' marcada':''}" style="--cor:${COR[L]};--i:${i}"><input type="radio" name="t2" value="${id}" ${m?'checked':''} aria-label="${esc(rotuloCaminho(L))}">
+      <span class="l1"><span class="letra" aria-hidden="true">${L}</span><span class="k">Virou</span><span class="v num">${fmtMil(d.fim)}</span><span class="pill">Escolhido</span></span>
+      <span class="l2">Maior queda <b>${fmtPct(d.mdd)}</b> · ${fmtReais(d.mddReais)} · ${nomeMes(d.mddI)}</span>
+      <span class="l3"><b>${d.meses} meses</b> sem recuperar o que tinha · ${periodo(d.uIni,d.uFim)}</span></label>`; }).join('');
+}
+function htmlTabela(){
+  return `<table class="num"><tr><th>Caminho</th><th class="r">Virou</th><th class="r">Maior queda</th><th class="r">Em reais</th><th>Pior mês</th><th>Mais tempo sem recuperar</th></tr>${ORDEM.map(L=>{const d=DERIV[L];return `<tr><td><span class="letra" style="--cor:${COR[L]}">${L}</span></td><td class="r">${fmtMil(d.fim)}</td><td class="r">${fmtPct(d.mdd)}</td><td class="r">${fmtReais(d.mddReais)}</td><td>${nomeMes(d.mddI)}</td><td>${d.meses} meses (${periodo(d.uIni,d.uFim)})</td></tr>`;}).join('')}</table>`;
+}
+function htmlTela6(){
+  const p={bloco:2,titulo:'Seis caminhos, <span class="lead">dez anos</span>'};
+  return `<div class="t6">${htmlTopo(6,p)}
+  <div class="t6-grid">
+    <div class="t6-esq">
+      <p class="apoio r">R$ 100 mil em janeiro de 2016, em seis carteiras reais que o Victor usa com clientes, só sem o nome.</p>
+      <div class="leitura r" id="leitura"><div class="l1"><span class="mes" id="mes">janeiro de 2016</span><button type="button" class="btn txt fim" id="ate-fim" hidden>Até o fim</button></div><div class="l2 num" id="valores"></div></div>
+      <p class="sr" id="resumo-g">Gráfico de linhas com seis caminhos, de 2016 a 2025. Os que terminam mais alto também caíram mais e passaram mais tempo sem recuperar. Os números de cada caminho estão nas opções abaixo.</p>
+      <div class="palco-g r" id="palco-g" tabindex="0" role="group" aria-describedby="resumo-g" aria-label="Gráfico dos seis caminhos. Use as setas para ler cada mês."><svg id="svg-g" aria-hidden="true" focusable="false"></svg></div>
+      <div class="marcos" id="marcos"></div>
+      <p class="small dica" id="dica">Arraste o dedo ou o mouse pelo gráfico para ler cada mês.</p>
+      <div id="card-marco"></div>
+    </div>
+    <div class="t6-dir">
+      <div class="pergunta" id="pergunta"><h2 class="titulo" style="font-size:20px">Qual desses caminhos você <span class="lead">toparia viver</span> nos próximos 10 anos?</h2><p class="apoio">Olhe quanto virou, mas também a maior queda e o tempo sem recuperar. Não tem resposta certa.</p></div>
+      <fieldset class="cams" id="cams"><legend>Qual desses caminhos você toparia viver nos próximos 10 anos?</legend>${htmlCartoes()}</fieldset>
+      <p class="small nota">Quedas em reais calculadas sobre o valor que a carteira tinha na hora.</p>
+      <div class="linha-tab"><button type="button" class="btn txt" id="ver-tabela" aria-expanded="false">Ver em tabela</button></div>
+    </div>
+  </div>
+  <div class="tabela" id="tabela" hidden>${htmlTabela()}</div>
+  ${htmlNav(6,'Próxima',!!E.respostas.t2)}${htmlFoot(6)}</div>`;
+}
 
-  function corpoEmail(){
-    const r = calcularResultado();
-    let t = 'Perfil de Investidor (autoaplicação)%0D%0A%0D%0A';
-    t += 'Nome: ' + cliente.nome + '%0D%0A';
-    t += 'Contato: ' + cliente.contato + '%0D%0A%0D%0ARespostas:%0D%0A';
-    perguntas.forEach((p,i) => { t += '- P' + p.n + ': ' + p.opcoes[respostas[i]] + ' (' + r.pts[i] + ' pts)%0D%0A'; });
-    t += '%0D%0APontuação final: ' + r.final.toFixed(2) + '%0D%0A';
-    t += 'Perfil (a conferir pelo Victor): ' + r.perfilFinal + '%0D%0A';
-    return t.replace(/ /g,'%20');
+let t6Anim=null; // controle da animação em curso
+function ligarTela6(sec){
+  const palco=$('#palco-g',sec), svg=$('#svg-g',sec), marcosEl=$('#marcos',sec), dica=$('#dica',sec), pergunta=$('#pergunta',sec), cams=$('#cams',sec);
+  const N=121, H=parseFloat(getComputedStyle(svg).height)||236; let W=palco.clientWidth||326;
+  const m={l:4,r:22,t:14,b:30}; const Y0=78000, Y1=350000;
+  let X=i=>m.l+(i/(N-1))*(W-m.l-m.r), Y=v=>H-m.b-((v-Y0)/(Y1-Y0))*(H-m.t-m.b);
+  let idx=0, marcoAberto=null, previa=null;
+  const svgNS='http://www.w3.org/2000/svg';
+  function desenhar(){
+    W=palco.clientWidth||326; X=i=>m.l+(i/(N-1))*(W-m.l-m.r);
+    svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+    const cid='clip-g';
+    let s=`<defs><clipPath id="${cid}"><rect id="clip-rect" x="0" y="0" width="${W}" height="${H}"/></clipPath></defs>`;
+    // faixas dos marcos
+    MARCOS.marcos.forEach((mk,i)=>{ s+=`<rect class="faixa" data-m="${mk.id}" x="${X(mk.inicio)}" y="${m.t}" width="${X(mk.fim)-X(mk.inicio)}" height="${H-m.t-m.b}"/>`; s+=`<line class="filete" data-m="${mk.id}" x1="${X(mk.pior)}" x2="${X(mk.pior)}" y1="${m.t}" y2="${H-m.b}"/>`; });
+    // hairlines 200 e 300 mil, rótulo 100 mil
+    [200000,300000].forEach(v=>{ s+=`<line x1="${m.l}" x2="${W-m.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line-2)"/><text x="${m.l+2}" y="${Y(v)-4}">${v/1000} mil</text>`; });
+    s+=`<line x1="${m.l}" x2="${W-m.r}" y1="${Y(100000)}" y2="${Y(100000)}" stroke="var(--line)"/><text x="${m.l+2}" y="${Y(100000)+13}" style="fill:var(--ink-2);font-weight:600">R$ 100 mil</text>`;
+    // eixo
+    [2016,2018,2020,2022,2024,2025].forEach(a=>{ const i=a===2025?N-1:(a-2016)*12; s+=`<text x="${X(i)}" y="${H-m.b+16}" text-anchor="${a===2016?'start':a===2025?'end':'middle'}">${a}</text>`; });
+    s+=`<line x1="${m.l}" x2="${W-m.r}" y1="${H-m.b}" y2="${H-m.b}" stroke="var(--line)"/>`;
+    // linhas
+    s+=`<g clip-path="url(#${cid})">`;
+    ORDEM.slice().reverse().forEach(L=>{ const sr=SERIE[L].serie; let d=''; for(let i=0;i<N;i++) d+=(i?'L':'M')+X(i).toFixed(1)+','+Y(sr[i]).toFixed(1); s+=`<path class="cam" data-l="${L}" style="--cor:${COR[L]}" d="${d}"/>`; });
+    s+=`</g>`;
+    // letras na ponta (afastadas)
+    const pontas=ORDEM.map(L=>({L,y:Y(SERIE[L].serie[N-1])})).sort((a,b)=>a.y-b.y);
+    for(let i=1;i<pontas.length;i++){ if(pontas[i].y-pontas[i-1].y<12) pontas[i].y=pontas[i-1].y+12; }
+    pontas.forEach(p=>{ s+=`<text class="letra" data-l="${p.L}" style="--cor:${COR[p.L]}" x="${W-m.r+6}" y="${p.y+4}">${p.L}</text>`; });
+    // hit paths para prévia no mouse
+    ORDEM.forEach(L=>{ const sr=SERIE[L].serie; let d=''; for(let i=0;i<N;i++) d+=(i?'L':'M')+X(i).toFixed(1)+','+Y(sr[i]).toFixed(1); s+=`<path class="hit" data-l="${L}" d="${d}"/>`; });
+    // leitura
+    s+=`<g id="leitura-g"><line class="hair" id="hair" y1="${m.t}" y2="${H-m.b}"/>${ORDEM.map(L=>`<circle class="pt" data-l="${L}" style="--cor:${COR[L]}" r="3.5"/>`).join('')}</g>`;
+    svg.innerHTML=s;
+    posicionarMarcos(); lerMes(idx,false);
+    if(marcoAberto) marcarMarco(marcoAberto,true);
   }
-
-  function enviar(){
-    tela = 'enviando'; render();
-    const payload = montarPayload();
-    fetch(SUPABASE_URL, {
-      method:'POST',
-      headers:{
-        'apikey': SUPABASE_ANON,
-        'Authorization': 'Bearer ' + SUPABASE_ANON,
-        'Content-Type':'application/json',
-        'Prefer':'return=minimal'
-      },
-      body: JSON.stringify(payload)
-    }).then(function(resp){
-      if(resp.ok){ tela = 'enviado'; render(); }
-      else { throw new Error('status ' + resp.status); }
-    }).catch(function(){
-      // fallback: abre e-mail pré-preenchido para o Victor
-      tela = 'erro'; render();
-    });
+  function posicionarMarcos(){
+    marcosEl.innerHTML=MARCOS.marcos.map((mk,i)=>`<button type="button" class="marco" data-m="${mk.id}" style="left:${X(mk.pior)}px" aria-expanded="${marcoAberto===mk.id}" aria-label="Marco ${i+1}: ${esc(mk.titulo)}, ${esc(mk.periodo)}"><i aria-hidden="true">${i+1}</i></button>`).join('');
+    $$('.marco',marcosEl).forEach(b=>b.addEventListener('click',()=>abrirMarco(b.dataset.m)));
   }
-
-  function renderEnviando(){
-    app.innerHTML = '<div class="final"><div class="spin"></div>' +
-      '<h2 style="margin-top:18px">Enviando...</h2>' +
-      '<p>Só um instante.</p></div>';
+  let anuncioT=null;
+  function lerMes(i,registra){
+    idx=Math.max(0,Math.min(N-1,i));
+    const x=X(idx); const hair=$('#hair',svg); if(hair){ hair.setAttribute('x1',x); hair.setAttribute('x2',x); }
+    $$('.pt',svg).forEach(c=>{ c.setAttribute('cx',x); c.setAttribute('cy',Y(SERIE[c.dataset.l].serie[idx])); });
+    $('#mes',sec).textContent=nomeMes(idx);
+    $('#valores',sec).innerHTML=ORDEM.map((L,i)=>`<span class="cv${E.respostas.t2==='t2_'+L.toLowerCase()?' sel':''}" style="--cor:${COR[L]}"><i>${L}</i><b>${Math.round(SERIE[L].serie[idx]/1000)}</b></span>${i<5?'<span class="sep">·</span>':''}`).join('')+'<span class="u">R$ mil</span>';
+    $('#ate-fim',sec).hidden = (idx===N-1);
+    if(registra){ if(!E.t2LeuMeses){ E.t2LeuMeses=true; salvar(); } clearTimeout(anuncioT); anuncioT=setTimeout(()=>{ $('#anuncio-leitura').textContent=nomeMes(idx)+': '+ORDEM.map(L=>L+' '+Math.round(SERIE[L].serie[idx]/1000)).join(', ')+' mil reais'; },500); }
   }
-
-  function renderEnviado(){
-    app.innerHTML = '<div class="final">' +
-      '<div class="ok">&#10003;</div>' +
-      '<h2>Recebido, ' + esc(cliente.nome.split(' ')[0]) + '!</h2>' +
-      '<p>Obrigado por responder. O Victor vai analisar o seu perfil e falar com você para apresentar o seu diagnóstico. Pode fechar esta página.</p>' +
-      '</div>';
+  function idxDoX(clientX){ const r=svg.getBoundingClientRect(); const px=(clientX-r.left)*(W/r.width); return Math.round((px-m.l)/(W-m.l-m.r)*(N-1)); }
+  // leitura por dedo e mouse
+  let pd=null, arrastando=false;
+  palco.addEventListener('pointerdown',e=>{ if(t6Anim){ pularAnimacao(); } pd={x:e.clientX,y:e.clientY,id:e.pointerId}; arrastando=false; });
+  palco.addEventListener('pointermove',e=>{
+    if(e.pointerType==='mouse'){ if(!pd||true){ lerMes(idxDoX(e.clientX),true); } return; }
+    if(!pd) return; const dx=e.clientX-pd.x, dy=e.clientY-pd.y;
+    if(!arrastando && Math.abs(dx)>8 && Math.abs(dx)>Math.abs(dy)){ arrastando=true; try{ palco.setPointerCapture(pd.id); }catch(x){} }
+    if(arrastando){ lerMes(idxDoX(e.clientX),true); }
+  });
+  palco.addEventListener('pointerup',e=>{ if(pd && !arrastando && e.pointerType!=='mouse'){ lerMes(idxDoX(e.clientX),true); } if(pd && e.pointerType==='mouse' && !arrastando){ lerMes(idxDoX(e.clientX),true); } pd=null; arrastando=false; });
+  palco.addEventListener('pointercancel',()=>{ pd=null; arrastando=false; });
+  palco.addEventListener('keydown',e=>{ const k=e.key; if(k==='ArrowLeft'){ e.preventDefault(); lerMes(idx-1,true); } else if(k==='ArrowRight'){ e.preventDefault(); lerMes(idx+1,true); } else if(k==='Home'){ e.preventDefault(); lerMes(0,true); } else if(k==='End'){ e.preventDefault(); lerMes(N-1,true); } });
+  // prévia ao passar o mouse na linha ou na letra
+  svg.addEventListener('pointerover',e=>{ const el=e.target.closest('.hit,.letra'); if(el && e.pointerType==='mouse'){ previa=el.dataset.l; palco.classList.add('tem-previa'); $$('.cam',svg).forEach(p=>p.classList.toggle('previa',p.dataset.l===previa)); } });
+  svg.addEventListener('pointerout',e=>{ const el=e.target.closest('.hit,.letra'); if(el){ previa=null; palco.classList.remove('tem-previa'); $$('.cam.previa',svg).forEach(p=>p.classList.remove('previa')); } });
+  $('#ate-fim',sec).addEventListener('click',()=>lerMes(N-1,true));
+  // marcos
+  function marcarMarco(id,on){ $$('.faixa,.filete',svg).forEach(el=>el.classList.toggle('aberta', on && el.dataset.m===id)); $$('.marco',marcosEl).forEach(b=>b.setAttribute('aria-expanded', String(on && b.dataset.m===id))); }
+  function abrirMarco(id){
+    if(marcoAberto===id){ fecharMarco(); return; }
+    marcoAberto=id; const i=MARCOS.marcos.findIndex(x=>x.id===id); const mk=MARCOS.marcos[i];
+    marcarMarco(id,true); lerMes(mk.pior,false);
+    if(!E.t2MarcosAbertos.includes(id)){ E.t2MarcosAbertos.push(id); salvar(); }
+    $('#card-marco',sec).innerHTML=`<div class="callout card-marco" role="region" aria-label="Marco ${i+1}: ${esc(mk.titulo)}"><div class="eyebrow">Marco ${i+1} · ${esc(mk.periodo)}</div><div class="tit">${esc(mk.titulo)}</div><p class="tx">${esc(mk.texto)}</p>
+      <div class="quedas"><span class="rot">Quanto cada caminho caiu aqui</span>${ORDEM.map(L=>`<span class="cv" style="--cor:${COR[L]}"><i>${L}</i><b>${fmtPct(quedaNoMarco(L,mk))}</b></span>`).join('<span class="sep muted">· </span>')}</div>
+      <div class="acoes"><button type="button" class="btn txt" id="fechar-marco">Fechar</button></div></div>`;
+    $('#fechar-marco',sec).addEventListener('click',fecharMarco);
+    const card=$('.card-marco',sec); requestAnimationFrame(()=>{ const r=card.getBoundingClientRect(); if(r.bottom>window.innerHeight) window.scrollBy({top:r.bottom-window.innerHeight+16,behavior:reduzido?'auto':'smooth'}); });
   }
-
-  function renderErro(){
-    const link = 'mailto:' + EMAIL_FALLBACK + '?subject=Perfil%20de%20Investidor%20-%20' +
-      encodeURIComponent(cliente.nome) + '&body=' + corpoEmail();
-    app.innerHTML = '<div class="final">' +
-      '<h2>Quase lá</h2>' +
-      '<p style="margin-bottom:20px">Não consegui enviar automaticamente agora. É só tocar no botão abaixo para mandar as suas respostas ao Victor por e-mail.</p>' +
-      '<a class="nav-btn primary" style="text-decoration:none;display:inline-block" href="' + link + '">Enviar por e-mail</a>' +
-      '</div>';
+  function fecharMarco(){ marcoAberto=null; marcarMarco(null,false); $('#card-marco',sec).innerHTML=''; }
+  // cartões
+  function aplicarSelecao(){ const v=E.respostas.t2; const L=v? v.slice(3).toUpperCase():null; palco.classList.toggle('tem-sel',!!L); $$('.cam',svg).forEach(p=>p.classList.toggle('sel',p.dataset.l===L)); $$('.cv',$('#valores',sec)).forEach((el,i)=>el.classList.toggle('sel',ORDEM[i]===L)); $$('.cam-k',cams).forEach(l=>l.classList.toggle('marcada',$('input',l).checked)); $('#avancar',sec).disabled=!L; }
+  $$('input',cams).forEach(inp=>inp.addEventListener('change',()=>{ E.respostas.t2=inp.value; salvar(); aplicarSelecao(); }));
+  $('#ver-tabela',sec).addEventListener('click',e=>{ const tb=$('#tabela',sec); const ab=tb.hidden; tb.hidden=!ab; e.currentTarget.setAttribute('aria-expanded',String(ab)); e.currentTarget.textContent=ab?'Esconder tabela':'Ver em tabela'; });
+  $('#voltar',sec).addEventListener('click',()=>irPara(5));
+  $('#avancar',sec).addEventListener('click',()=>{ if(E.respostas.t2) irPara(7); });
+  // estado final x animação
+  function estadoFinal(){ palco.classList.add('fim-anim'); marcosEl.classList.add('on'); dica.classList.add('on'); pergunta.classList.add('on'); cams.classList.add('on'); const cr=$('#clip-rect',svg); if(cr) cr.setAttribute('width',W); lerMes(N-1,false); aplicarSelecao(); }
+  function pularAnimacao(){ if(!t6Anim) return; clearInterval(t6Anim.raf); clearTimeout(t6Anim.t1); clearTimeout(t6Anim.t2); t6Anim=null; estadoFinal(); E.t2Visto=true; salvar(); }
+  function animar(){
+    const cr=$('#clip-rect',svg); cr.setAttribute('width',0); lerMes(0,false); $('#ate-fim',sec).hidden=true;
+    const dur=2400, ini=performance.now()+400; t6Anim={raf:0,t1:0,t2:0};
+    const passo=()=>{ const now=performance.now(); if(!t6Anim) return; const p=Math.max(0,Math.min(1,(now-ini)/dur)); const e=1-Math.pow(1-p,2); cr.setAttribute('width',(m.l+e*(W-m.l-m.r)+2).toFixed(1)); lerMes(Math.round(e*(N-1)),false); $('#ate-fim',sec).hidden=true; if(p<1){ /* o intervalo continua */ } else { clearInterval(t6Anim.raf); palco.classList.add('fim-anim'); cr.setAttribute('width',W); t6Anim.t1=setTimeout(()=>{ marcosEl.classList.add('on'); dica.classList.add('on'); },200); t6Anim.t2=setTimeout(()=>{ pergunta.classList.add('on'); cams.classList.add('on'); t6Anim=null; E.t2Visto=true; salvar(); lerMes(N-1,false); },600); } };
+    t6Anim.raf=setInterval(passo,16);
   }
+  desenhar();
+  if(reduzido || E.t2Visto){ estadoFinal(); } else { animar(); }
+  window.addEventListener('resize',()=>{ if(telaAtual!==6) return; const vis=palco.classList.contains('fim-anim'); desenhar(); if(vis){ const cr=$('#clip-rect',svg); if(cr) cr.setAttribute('width',W); aplicarSelecao(); } });
+}
 
-  render();
+/* ======================================================================
+   Envio
+   ====================================================================== */
+let ultimoContrato=null, emEnvio=false;
+function montarContrato(){
+  const r=E.respostas; const agora=new Date(); const ini=E.iniciadoEm?new Date(E.iniciadoEm):agora;
+  return {
+    nome:(E.nome||'').trim(), contato:(E.contato||'').trim(), contato_tipo:E.contatoTipo, versao_formulario:VERSAO, origem:'formulario_perfil_v3', user_agent:navigator.userAgent,
+    respostas:{ contato_tipo:E.contatoTipo, horizonte_uso:r.horizonte_uso||null, previsibilidade_renda:r.previsibilidade_renda||null, reserva_emergencia:r.reserva_emergencia||null, dependencia_carteira:r.dependencia_carteira||null,
+      t1:r.t1||null, t2:r.t2||null, t3:r.t3||null, t4:r.t4||null, t4_hipotetico: r.t4==='t4_nunca_passei' ? (r.t4_hipotetico||null) : null,
+      e1:Array.isArray(r.e1)?r.e1:[], e2:r.e2||null,
+      _meta:{ iniciado_em:isoLocal(ini), enviado_em:isoLocal(agora), tempo_segundos:Math.max(0,Math.round((agora-ini)/1000)), retomou:!!E.retomou, nome_na_url:!!E.nomeNaUrl, largura_tela:window.innerWidth, t2_leu_meses:!!E.t2LeuMeses, t2_marcos_abertos:E.t2MarcosAbertos.slice() } } };
+}
+async function enviar(){
+  if(emEnvio) return;
+  emEnvio=true; ultimoContrato=montarContrato(); irPara('enviando');
+  const inicio=performance.now(); const ctrl=new AbortController(); const limite=setTimeout(()=>ctrl.abort(), ENVIO_LIMITE_MS);
+  let ok=false;
+  try{
+    const resp=await fetch(SUPABASE_URL,{method:'POST',signal:ctrl.signal,headers:{'apikey':SUPABASE_ANON,'Authorization':'Bearer '+SUPABASE_ANON,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(ultimoContrato)});
+    ok=resp.ok;
+  }catch(e){ ok=false; }
+  clearTimeout(limite);
+  // a tela Enviando fica ao menos 600 ms para nao piscar
+  const falta=600-(performance.now()-inicio); if(falta>0) await new Promise(r=>setTimeout(r,falta));
+  emEnvio=false;
+  if(ok) renderRecebido(); else renderErro();
+}
+function renderRecebido(){ apagarSalvo(); irPara('recebido'); }
+function renderErro(){ if(!ultimoContrato) ultimoContrato=montarContrato(); irPara('erro'); }
+function htmlEnviando(){ return `<div class="envio"><div class="eyebrow r">Enviando</div><h2 class="titulo r" id="titulo">Guardando as suas respostas</h2><div class="linha-cresce r"><i></i></div><p class="apoio r">Só um instante.</p></div>`; }
+function htmlRecebido(){ const nm=primeiroNome(E.nome)||'você'; return `<div class="envio"><div class="eyebrow r">Recebido</div><h2 class="titulo grande r" id="titulo">Obrigado, <span class="lead">${esc(nm)}</span>.</h2><div class="callout r">O Victor vai ler tudo com calma e apresenta o resultado na conversa de vocês. Pode fechar esta página.</div><p class="small r" style="margin-top:12px">Se lembrar de algo, é só mandar mensagem para ele.</p></div><div class="foot"><span>Victor Faleiros · Perfil de investimentos</span><span class="num">10 / 10</span></div>`; }
+function htmlErro(){ return `<div class="envio"><div class="eyebrow r">Quase lá</div><h2 class="titulo r" id="titulo">Não consegui enviar agora</h2><div class="callout gold r">Toque no botão abaixo para mandar as suas respostas ao Victor por e-mail. Já vai tudo preenchido.</div><div class="nav r" style="justify-content:flex-start;gap:8px"><a class="btn" id="mailto" href="#" style="display:inline-flex;align-items:center;text-decoration:none">Enviar por e-mail</a><button type="button" class="btn txt" id="tentar">Tentar de novo</button></div><p class="small r">As suas respostas continuam guardadas neste aparelho enquanto isso.</p></div>`; }
+function textoOpcao(chave,id){ for(const k of Object.keys(PERGUNTAS)){ const p=PERGUNTAS[k]; if(p.chave===chave){ const o=p.opcoes.find(x=>x.id===id); if(o) return o.html.replace(/<span class="(sub|desc)">.*?<\/span>/g,'').replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim(); } } return id||''; }
+function corpoEmail(c){
+  const r=c.respostas; const L=r.t2?r.t2.slice(3).toUpperCase():null; const d=L?DERIV[L]:null;
+  const linhas=[`Perfil de investimentos: ${c.nome}`,`Contato (${r.contato_tipo}): ${c.contato}`,'',
+    'BLOCO 1 · COM O QUE VOCÊ PODE CONTAR',`Quando vai usar: ${textoOpcao('horizonte_uso',r.horizonte_uso)}`,`Como é a sua renda: ${textoOpcao('previsibilidade_renda',r.previsibilidade_renda)}`,`Se a renda parasse: ${textoOpcao('reserva_emergencia',r.reserva_emergencia)}`,`O investido paga conta: ${textoOpcao('dependencia_carteira',r.dependencia_carteira)}`,'',
+    'BLOCO 2 · COMO VOCÊ LIDA COM OSCILAÇÃO',`Retrato: ${textoOpcao('t1',r.t1)}`, d?`Seis caminhos: ${L} (virou ${fmtMil(d.fim)}, maior queda ${fmtPct(d.mdd)}, ${d.meses} meses sem recuperar)`:'Seis caminhos: ', `Queda que você topa: ${textoOpcao('t3',r.t3)}`,`Na última queda forte: ${textoOpcao('t4',r.t4)}`, r.t4_hipotetico?`Se acontecesse: ${textoOpcao('t4_hipotetico',r.t4_hipotetico)}`:null,'',
+    'BLOCO 3 · SUA EXPERIÊNCIA',`O que você já teve: ${(r.e1||[]).map(i=>textoOpcao('e1',i)).join('; ')}`,`Em qual crise já investia: ${textoOpcao('e2',r.e2)}`,'',
+    'Código técnico: '+JSON.stringify(c)].filter(x=>x!==null);
+  return linhas.join('\n');
+}
+function ligarEnvio(sec,t){
+  if(t==='erro'){ const c=ultimoContrato||montarContrato(); $('#mailto',sec).href='mailto:'+EMAIL_RESERVA+'?subject='+encodeURIComponent('Perfil de investidor - '+c.nome)+'&body='+encodeURIComponent(corpoEmail(c)); $('#tentar',sec).addEventListener('click',enviar); }
+}
+
+function ligar(sec,t){
+  if(t===0) ligarAbertura(sec);
+  else if(t===6) ligarTela6(sec);
+  else if(PERGUNTAS[t]) ligarPergunta(sec,t);
+  else ligarEnvio(sec,t);
+}
+
+
+/* ======================================================================
+   Início
+   ====================================================================== */
+irPara(0);
 </script>
 </body>
 </html>
