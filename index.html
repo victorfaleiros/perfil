@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <title>Perfil de investidor · Victor Faleiros</title>
-<meta name="description" content="Dez perguntas para o Victor Faleiros saber que carteira montar para você. Leva uns 5 minutos.">
+<meta name="description" content="Nove perguntas para o Victor Faleiros saber que carteira montar para você. Leva uns 5 minutos.">
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -287,7 +287,7 @@ const MARCOS = {"nota":"Marcos da década para os cartões do gráfico dos 6 cam
 /* ======================================================================
    Conteúdo (textos finais da espec de UX 3.0)
    ====================================================================== */
-const VERSAO = '3.0';
+const VERSAO = '3.1';
 const CHAVE = 'perfil-v3';
 const SUPABASE_URL = 'https://oumcsjqiuitzosrgnhbr.supabase.co/rest/v1/formulario_respostas';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im91bWNzanFpdWl0em9zcmduaGJyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAwNTM5MzQsImV4cCI6MjA5NTYyOTkzNH0.WooEUe4Jes5TjQXuc-zQdYwdgG13ZBm5wR_FzSU_gWA';
@@ -303,11 +303,9 @@ const PERGUNTAS = {
      opcoes:[{id:'hz_menos_3',html:'Em menos de <b>3</b> anos'},{id:'hz_3_5',html:'De <b>3 a 5</b> anos'},{id:'hz_5_10',html:'De <b>5 a 10</b> anos'},{id:'hz_mais_10',html:'Mais de <b>10</b> anos'}]},
   2:{bloco:1,chave:'previsibilidade_renda',titulo:'Como é a <span class="lead">sua renda</span>?',apoio:'Isso diz até onde a carteira pode ousar.',
      opcoes:[{id:'renda_estavel',html:'Estável: CLT, servidor, aposentadoria'},{id:'renda_variavel_previsivel',html:'Varia, mas é previsível na média<span class="sub">autônomo com clientela, empresa com fluxo estável</span>'},{id:'renda_instavel',html:'Muito instável, sem previsibilidade<span class="sub">comissões que mudam muito</span>'},{id:'renda_multiplas',html:'Várias fontes estáveis, ou uma renda passiva que já pesa'}]},
-  3:{bloco:1,chave:'reserva_emergencia',titulo:'Se a sua renda <span class="lead">parasse hoje</span>',apoio:'Por quanto tempo o dinheiro fácil de sacar cobriria as suas contas?',
-     opcoes:[{id:'reserva_nenhuma',html:'Não tenho uma reserva separada'},{id:'reserva_menos_3',html:'Menos de <b>3</b> meses'},{id:'reserva_3_6',html:'De <b>3 a 6</b> meses'},{id:'reserva_mais_6',html:'Mais de <b>6</b> meses'}]},
-  4:{bloco:1,chave:'dependencia_carteira',titulo:'O dinheiro investido <span class="lead">paga alguma conta</span> sua hoje?',apoio:'',
+  3:{bloco:1,chave:'dependencia_carteira',titulo:'O dinheiro investido <span class="lead">paga alguma conta</span> sua hoje?',apoio:'',
      opcoes:[{id:'dep_vive',html:'Sim, vivo em parte ou totalmente da renda dele'},{id:'dep_complementa',html:'Às vezes complemento o mês com ele'},{id:'dep_nao',html:'Não, ele é só para o futuro'}]},
-  5:{bloco:2,chave:'t1',titulo:'Qual dessas pessoas <span class="lead">mais parece com você</span>?',apoio:'Quatro perguntas sobre como você reage quando o dinheiro oscila. Não tem resposta certa; tem a sua.',
+  4:{bloco:2,chave:'t1',titulo:'Qual dessas pessoas <span class="lead">mais parece com você</span>?',apoio:'Quatro perguntas sobre como você reage quando o dinheiro oscila. Não tem resposta certa; tem a sua.',
      opcoes:[
        {id:'t1_pedro',html:'<span class="nome">Pedro</span><span class="desc">Confere a carteira várias vezes por semana. Uma queda pequena já o deixa desconfortável.</span>'},
        {id:'t1_renata',html:'<span class="nome">Renata</span><span class="desc">Quando vê uma queda, pensa primeiro em comprar mais. Para ela, queda é desconto, não problema.</span>'},
@@ -315,7 +313,7 @@ const PERGUNTAS = {
        {id:'t1_lucas',html:'<span class="nome">Lucas</span><span class="desc">Sabe que o mercado oscila e segue o plano, mas um mês negativo ainda incomoda.</span>'},
        {id:'t1_antonio',html:'<span class="nome">Antônio</span><span class="desc">Gosta de novidade. Arrisca uma parte do dinheiro, desde que outra parte fique protegida.</span>'},
        {id:'t1_carla',html:'<span class="nome">Carla</span><span class="desc">Se diz arrojada. Gosta de ter uma parte grande do patrimônio em ativos que oscilam bastante.</span>'}]},
-  7:{bloco:2,chave:'t3',titulo:'Até que <span class="lead">queda</span> você aguentaria?',apoio:'Imagine R$ 500 mil investidos. Num mês ruim, você abre o extrato. Até onde vai sem perder o sono nem mexer na carteira?',
+  6:{bloco:2,chave:'t3',titulo:'Até que <span class="lead">queda</span> você aguentaria?',apoio:'Imagine R$ 500 mil investidos. Num mês ruim, você abre o extrato. Até onde vai sem perder o sono nem mexer na carteira?',
      opcoes:[
        {id:'t3_nenhuma',html:'<span class="pct txt">Qualquer queda</span><span class="reais">me tira o sono</span>'},
        {id:'t3_2',html:'<span class="pct">2%</span><span class="reais">uns R$ 10 mil</span>'},
@@ -323,18 +321,18 @@ const PERGUNTAS = {
        {id:'t3_6',html:'<span class="pct">6%</span><span class="reais">uns R$ 30 mil</span>'},
        {id:'t3_8',html:'<span class="pct">8%</span><span class="reais">uns R$ 40 mil</span>'},
        {id:'t3_10',html:'<span class="pct">10%<small style="font-size:13px;font-weight:600;margin-left:4px">ou mais</small></span><span class="reais">R$ 50 mil para cima</span>'}]},
-  8:{bloco:2,chave:'t4',titulo:'Na última <span class="lead">queda forte</span>, o que você fez?',apoio:'Pense na última vez em que viu os seus investimentos caírem de verdade: 2020, 2022 ou outra.',
+  7:{bloco:2,chave:'t4',titulo:'Na última <span class="lead">queda forte</span>, o que você fez?',apoio:'Pense na última vez em que viu os seus investimentos caírem de verdade: 2020, 2022 ou outra.',
      opcoes:[{id:'t4_nao_mexi_sofri',html:'Não mexi, mas passei mal com aquilo'},{id:'t4_comprei_mais',html:'Aproveitei e comprei mais'},{id:'t4_vendi_parte',html:'Vendi uma parte'},{id:'t4_nao_mexi_tranquilo',html:'Não mexi e segui o plano com tranquilidade'},{id:'t4_vendi_tudo',html:'Vendi tudo ou quase tudo para parar a perda'},{id:'t4_nunca_passei',html:'Nunca passei por uma queda forte investindo',sep:true}]},
-  '8b':{bloco:2,chave:'t4_hipotetico',titulo:'Então vamos <span class="lead">imaginar</span>.',apoio:'Os seus investimentos caem de verdade e ficam assim por alguns meses seguidos. O que você acha que faria?',
+  '7b':{bloco:2,chave:'t4_hipotetico',titulo:'Então vamos <span class="lead">imaginar</span>.',apoio:'Os seus investimentos caem de verdade e ficam assim por alguns meses seguidos. O que você acha que faria?',
      opcoes:[{id:'t4h_nao_mexi_sofri',html:'Não mexeria, mas passaria mal com aquilo'},{id:'t4h_comprei_mais',html:'Aproveitaria e compraria mais'},{id:'t4h_vendi_parte',html:'Venderia uma parte'},{id:'t4h_nao_mexi_tranquilo',html:'Não mexeria e seguiria o plano com tranquilidade'},{id:'t4h_vendi_tudo',html:'Venderia tudo ou quase tudo para parar a perda'}]},
-  9:{bloco:3,chave:'e1',multipla:true,titulo:'O que você <span class="lead">já teve</span> ou tem?',apoio:'Duas perguntas sobre o que você já viveu investindo. Marque tudo que se aplica.',
+  8:{bloco:3,chave:'e1',multipla:true,titulo:'O que você <span class="lead">já teve</span> ou tem?',apoio:'Duas perguntas sobre o que você já viveu investindo. Marque tudo que se aplica.',
      opcoes:[{id:'e1_poupanca_cdb',html:'Poupança ou CDB'},{id:'e1_tesouro_rf',html:'Tesouro Direto ou fundos de renda fixa'},{id:'e1_multimercado',html:'Fundos multimercado'},{id:'e1_acoes_fii_etf',html:'Ações, fundos imobiliários ou ETFs'},{id:'e1_exterior',html:'Investimentos no exterior'},{id:'e1_cripto_outros',html:'Cripto ou outros'},{id:'e1_nunca',html:'Nunca investi',sep:true,exclusiva:true}]},
-  10:{bloco:3,chave:'e2',titulo:'Em qual dessas crises você <span class="lead">já investia</span> em renda variável?',apoio:'Ações, fundos de ações, multimercados, ETFs. Se foi em mais de uma, marque a última opção.',
+  9:{bloco:3,chave:'e2',titulo:'Em qual dessas crises você <span class="lead">já investia</span> em renda variável?',apoio:'Ações, fundos de ações, multimercados, ETFs. Se foi em mais de uma, marque a última opção.',
      opcoes:[{id:'e2_nenhuma',html:'Em nenhuma delas'},{id:'e2_2020',html:'Pandemia, março de <b>2020</b>'},{id:'e2_2015_2016',html:'Crise brasileira de <b>2015</b> e <b>2016</b>'},{id:'e2_2008',html:'Crise de <b>2008</b> e <b>2009</b>'},{id:'e2_mais_de_uma',html:'Em mais de uma delas'}]}
 };
-const ROTULO = {horizonte_uso:'Quando vai usar',previsibilidade_renda:'Como é a sua renda',reserva_emergencia:'Se a renda parasse',dependencia_carteira:'O investido paga conta',t1:'Retrato',t2:'Seis caminhos',t3:'Queda que você topa',t4:'Na última queda forte',t4_hipotetico:'Se acontecesse',e1:'O que você já teve',e2:'Em qual crise já investia'};
-const SEQ = [0,1,2,3,4,5,6,7,8,'8b',9,10];
-const NUM = {1:1,2:2,3:3,4:4,5:5,6:6,7:7,8:8,'8b':8,9:9,10:10};
+const ROTULO = {horizonte_uso:'Quando vai usar',previsibilidade_renda:'Como é a sua renda',dependencia_carteira:'O investido paga conta',t1:'Retrato',t2:'Seis caminhos',t3:'Queda que você topa',t4:'Na última queda forte',t4_hipotetico:'Se acontecesse',e1:'O que você já teve',e2:'Em qual crise já investia'};
+const SEQ = [0,1,2,3,4,5,6,7,'7b',8,9];
+const NUM = {1:1,2:2,3:3,4:4,5:5,6:6,7:7,'7b':7,8:8,9:9};
 
 /* ======================================================================
    Utilidades
@@ -377,7 +375,7 @@ function nomeDaUrl(){ const n=(PARAMS.get('nome')||'').trim(); if(!n||n.length>8
 let armazenamentoOk = true;
 try { localStorage.setItem(CHAVE+'-teste','1'); localStorage.removeItem(CHAVE+'-teste'); } catch(e){ armazenamentoOk=false; }
 
-function estadoNovo(){ const nu=nomeDaUrl(); return {v:VERSAO, nome:nu, nomeNaUrl:!!nu, contatoTipo:'whatsapp', contato:'', respostas:{}, tela:0, iniciadoEm:null, retomou:false, t2Visto:false, t2LeuMeses:false, t2MarcosAbertos:[]}; }
+function estadoNovo(){ const nu=nomeDaUrl(); return {v:VERSAO, nome:nu, nomeNaUrl:!!nu, respostas:{}, tela:0, iniciadoEm:null, retomou:false, t2Visto:false, t2LeuMeses:false, t2MarcosAbertos:[]}; }
 let E = estadoNovo();
 let salvoAoAbrir = null;
 try { const raw = armazenamentoOk && localStorage.getItem(CHAVE); if(raw){ const s=JSON.parse(raw); if(s && s.v===VERSAO) salvoAoAbrir=s; } } catch(e){}
@@ -390,21 +388,21 @@ function apagarSalvo(){ clearTimeout(salvarT); try{ localStorage.removeItem(CHAV
    ====================================================================== */
 const lamina=$('#lamina'), telas=$('#telas'), barra=$('#barra'), abaixo=$('#abaixo');
 let telaAtual=0;
-function proxima(t){ if(t===8) return E.respostas.t4==='t4_nunca_passei' ? '8b' : 9; if(t==='8b') return 9; return t+1; }
-function anterior(t){ if(t===9) return E.respostas.t4==='t4_nunca_passei' ? '8b' : 8; if(t==='8b') return 8; return t-1; }
+function proxima(t){ if(t===7) return E.respostas.t4==='t4_nunca_passei' ? '7b' : 8; if(t==='7b') return 8; return t+1; }
+function anterior(t){ if(t===8) return E.respostas.t4==='t4_nunca_passei' ? '7b' : 7; if(t==='7b') return 7; return t-1; }
 
 function irPara(t){
   if(typeof t==='string' && /^\d+$/.test(t)) t=parseInt(t,10);
   telaAtual=t;
   if(SEQ.includes(t) && t!==0){ E.tela=t; salvar(); }
   if(t===0){ E.tela=0; salvar(); }
-  lamina.classList.toggle('larga', t===6);
+  lamina.classList.toggle('larga', t===5);
   lamina.classList.toggle('sem-barra', !(NUM[t]));
-  const n=NUM[t]||0; barra.style.width=(n*10)+'%';
+  const n=NUM[t]||0; barra.style.width=(n/9*100).toFixed(2)+'%';
   telas.innerHTML='';
   const sec=document.createElement('section'); sec.className='tela'; sec.dataset.tela=String(t);
   if(t===0) sec.innerHTML=htmlAbertura();
-  else if(t===6) sec.innerHTML=htmlTela6();
+  else if(t===5) sec.innerHTML=htmlTela6();
   else if(PERGUNTAS[t]) sec.innerHTML=htmlPergunta(t);
   else if(t==='enviando') sec.innerHTML=htmlEnviando();
   else if(t==='recebido') sec.innerHTML=htmlRecebido();
@@ -419,7 +417,7 @@ function irPara(t){
   const tit=$('h1, h2.titulo',sec); if(tit){ tit.setAttribute('tabindex','-1'); setTimeout(()=>tit.focus({preventScroll:true}),60); }
   anunciar(t,sec);
 }
-function anunciar(t,sec){ const a=$('#anuncio'); const tit=($('h1, h2.titulo',sec)||{}).textContent||''; const p=PERGUNTAS[t]; let s=''; if(t===6) s=`Bloco 2 de 3, ${BLOCO_NOME[2]}. Pergunta 6 de 10. `; else if(p) s=`Bloco ${p.bloco} de 3, ${BLOCO_NOME[p.bloco]}. Pergunta ${NUM[t]} de 10${t==='8b'?', continuação':''}. `; a.textContent=''; setTimeout(()=>{a.textContent=s+tit;},80); }
+function anunciar(t,sec){ const a=$('#anuncio'); const tit=($('h1, h2.titulo',sec)||{}).textContent||''; const p=PERGUNTAS[t]; let s=''; if(t===5) s=`Bloco 2 de 3, ${BLOCO_NOME[2]}. Pergunta 5 de 9. `; else if(p) s=`Bloco ${p.bloco} de 3, ${BLOCO_NOME[p.bloco]}. Pergunta ${NUM[t]} de 9${t==='7b'?', continuação':''}. `; a.textContent=''; setTimeout(()=>{a.textContent=s+tit;},80); }
 
 function renderAbaixo(){
   const contadas = NUM[telaAtual] || telaAtual===0 && (E.tela>0 || temRespostas());
@@ -436,9 +434,9 @@ function recomecar(){ apagarSalvo(); salvoAoAbrir=null; E=estadoNovo(); t6Anim=n
 /* ======================================================================
    Pedaços comuns
    ====================================================================== */
-function htmlTopo(t,p){ const n=NUM[t]; const pill = t==='8b' ? `Pergunta ${n} de 10 · continuação` : `Pergunta ${n} de 10`; return `<div class="top r"><div><div class="eyebrow">${esc(BLOCOS[p.bloco])}</div><h2 class="titulo" id="titulo">${p.titulo}</h2></div><span class="pill">${pill}</span></div>`; }
+function htmlTopo(t,p){ const n=NUM[t]; const pill = t==='7b' ? `Pergunta ${n} de 9 · continuação` : `Pergunta ${n} de 9`; return `<div class="top r"><div><div class="eyebrow">${esc(BLOCOS[p.bloco])}</div><h2 class="titulo" id="titulo">${p.titulo}</h2></div><span class="pill">${pill}</span></div>`; }
 function htmlNav(t,label,ativo){ return `<div class="nav"><button type="button" class="btn txt" id="voltar">Voltar</button><button type="button" class="btn" id="avancar" ${ativo?'':'disabled'}>${label}</button></div>`; }
-function htmlFoot(t){ return `<div class="foot"><span>Victor Faleiros · Perfil de investimentos</span><span class="num">${NUM[t]} / 10</span></div>`; }
+function htmlFoot(t){ return `<div class="foot"><span>Victor Faleiros · Perfil de investimentos</span><span class="num">${NUM[t]} / 9</span></div>`; }
 function htmlOpcoes(p){
   const tipo = p.multipla ? 'checkbox' : 'radio'; const atual = E.respostas[p.chave];
   return `<fieldset class="lista r"><legend>${p.titulo.replace(/<[^>]+>/g,'')}</legend>${p.opcoes.map(o=>{
@@ -456,28 +454,23 @@ function htmlAbertura(){
   let miolo;
   if(salvoAoAbrir && salvoAoAbrir.tela && salvoAoAbrir.tela!==0){
     const n = NUM[salvoAoAbrir.tela] || 1; const nm = primeiroNome(salvoAoAbrir.nome);
-    miolo = `<div class="retomada r"><h3>Bem-vindo de volta${nm?', <span class="lead">'+esc(nm)+'</span>':''}</h3><p>As suas respostas ficaram guardadas aqui no aparelho. Você parou na pergunta ${n} de 10.</p>
+    miolo = `<div class="retomada r"><h3>Bem-vindo de volta${nm?', <span class="lead">'+esc(nm)+'</span>':''}</h3><p>As suas respostas ficaram guardadas aqui no aparelho. Você parou na pergunta ${n} de 9.</p>
       <div class="nav" style="justify-content:flex-start;gap:8px;margin-top:14px"><button type="button" class="btn" id="continuar">Continuar de onde parei</button><button type="button" class="btn txt" id="zerar">Recomeçar do zero</button></div><div id="conf-zerar"></div></div>`;
   } else {
-    const wa = E.contatoTipo==='whatsapp';
     miolo = `<div class="campo r"><label class="rot" for="nome">O seu nome</label><input id="nome" name="name" autocomplete="name" autocapitalize="words" placeholder="Nome e sobrenome" value="${esc(E.nome)}"><p class="erro" id="erro-nome" role="alert"></p></div>
-      <div class="campo r"><span class="rot" id="rot-contato">Como o Victor fala com você</span>
-        <div class="seg" role="group" aria-labelledby="rot-contato"><button type="button" id="seg-wa" aria-pressed="${wa}">WhatsApp</button><button type="button" id="seg-em" aria-pressed="${!wa}">E-mail</button></div>
-        <input id="contato" ${wa?'type="tel" inputmode="tel" autocomplete="tel-national" placeholder="(00) 00000-0000"':'type="email" inputmode="email" autocomplete="email" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="seu@email.com"'} value="${esc(E.contato)}" aria-label="${wa?'WhatsApp':'E-mail'}"><p class="erro" id="erro-contato" role="alert"></p></div>
       <button type="button" class="btn cheio r" id="comecar">Começar</button>
       ${armazenamentoOk?'<p class="small garantia r">Pode parar e voltar depois: as respostas ficam guardadas neste aparelho até você enviar.</p>':''}`;
   }
   return `<div class="capa">
     <div class="eyebrow r">Perfil de investimentos</div>
     <h1 class="r" id="titulo">${sauda}</h1>
-    <p class="apoio r">Dez perguntas para o Victor saber que carteira montar para você.</p>
-    <div class="kpis r"><div class="kpi"><span class="k">Perguntas</span><span class="v num">10</span></div><div class="kpi gold"><span class="k">Min</span><span class="v num">5</span><span class="d">sem resposta certa ou errada</span></div></div>
+    <p class="apoio r">Nove perguntas para o Victor saber que carteira montar para você.</p>
+    <div class="kpis r"><div class="kpi"><span class="k">Perguntas</span><span class="v num">9</span></div><div class="kpi gold"><span class="k">Min</span><span class="v num">5</span><span class="d">sem resposta certa ou errada</span></div></div>
     <p class="small r" style="margin-top:12px">O resultado o Victor apresenta na conversa de vocês. As respostas vão direto para ele.</p>
     ${miolo}
     <div class="foot"><span>Victor Faleiros</span><span>${mesAno()}</span></div>
   </div>`;
 }
-function mascaraWa(v){ const d=v.replace(/\D/g,'').slice(0,11); if(!d) return ''; if(d.length<=2) return '('+d; const ddd=d.slice(0,2), r=d.slice(2); if(r.length<=4) return `(${ddd}) ${r}`; if(r.length<=8) return `(${ddd}) ${r.slice(0,4)}-${r.slice(4)}`; return `(${ddd}) ${r.slice(0,5)}-${r.slice(5)}`; }
 function ligarAbertura(sec){
   const cont=$('#continuar',sec);
   if(cont){
@@ -485,29 +478,22 @@ function ligarAbertura(sec){
     $('#zerar',sec).addEventListener('click',()=>{ $('#conf-zerar',sec).innerHTML='<div class="conf"><span class="muted">Apagar tudo e começar de novo?</span><button type="button" class="btn" style="min-height:40px" id="ap2">Apagar</button><button type="button" class="btn txt" id="ca2">Cancelar</button></div>'; $('#ap2',sec).addEventListener('click',recomecar); $('#ca2',sec).addEventListener('click',()=>{$('#conf-zerar',sec).innerHTML='';}); $('#ap2',sec).focus(); });
     return;
   }
-  const nome=$('#nome',sec), contato=$('#contato',sec);
+  const nome=$('#nome',sec);
   nome.addEventListener('input',()=>{ E.nome=nome.value; $('#erro-nome',sec).textContent=''; salvar(); });
-  contato.addEventListener('input',()=>{ if(E.contatoTipo==='whatsapp'){ contato.value=mascaraWa(contato.value); } E.contato=contato.value; $('#erro-contato',sec).textContent=''; salvar(); });
-  const trocar = tipo => { if(E.contatoTipo===tipo) return; E.contatoTipo=tipo; E.contato=''; salvar(); irPara(0); setTimeout(()=>{ const c=$('#contato'); if(c) c.focus(); },80); };
-  $('#seg-wa',sec).addEventListener('click',()=>trocar('whatsapp'));
-  $('#seg-em',sec).addEventListener('click',()=>trocar('email'));
   $('#comecar',sec).addEventListener('click',()=>{
     const n=nome.value.trim(); const letras=(n.match(/\p{L}/gu)||[]).length;
     if(letras<2){ $('#erro-nome',sec).textContent='Coloque o seu nome, para o Victor saber de quem é a resposta.'; nome.focus(); return; }
-    const c=contato.value.trim();
-    if(E.contatoTipo==='whatsapp'){ if(c.replace(/\D/g,'').length<10){ $('#erro-contato',sec).textContent='Confere o WhatsApp? Precisa do DDD, tipo (16) 99999-1234.'; contato.focus(); return; } }
-    else { if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(c)){ $('#erro-contato',sec).textContent='Confere o e-mail? Parece incompleto.'; contato.focus(); return; } }
-    E.nome=n; E.contato=c; if(!E.iniciadoEm) E.iniciadoEm=isoLocal(new Date()); salvar(); irPara(1);
+    E.nome=n; if(!E.iniciadoEm) E.iniciadoEm=isoLocal(new Date()); salvar(); irPara(1);
   });
 }
 
 /* ======================================================================
-   Telas de pergunta em lista (1 a 5, 7 a 10)
+   Telas de pergunta em lista (1 a 4, 6 a 9)
    ====================================================================== */
 function htmlPergunta(t){
-  const p=PERGUNTAS[t]; const b2 = p.bloco===2; const label = t===10 ? 'Enviar' : (b2 ? 'Próxima' : 'Avançar');
+  const p=PERGUNTAS[t]; const b2 = p.bloco===2; const label = t===9 ? 'Enviar' : (b2 ? 'Próxima' : 'Avançar');
   const ativo = p.bloco===3 ? true : !!E.respostas[p.chave];
-  return `${htmlTopo(t,p)}${p.apoio?`<p class="apoio r">${p.apoio}</p>`:''}${htmlOpcoes(p)}${t===10?'<p class="small pre-nav">Ao enviar, as suas respostas vão só para o Victor.</p>':''}${htmlNav(t,label,ativo)}${htmlFoot(t)}`;
+  return `${htmlTopo(t,p)}${p.apoio?`<p class="apoio r">${p.apoio}</p>`:''}${htmlOpcoes(p)}${t===9?'<p class="small pre-nav">Ao enviar, as suas respostas vão só para o Victor.</p>':''}${htmlNav(t,label,ativo)}${htmlFoot(t)}`;
 }
 function ligarPergunta(sec,t){
   const p=PERGUNTAS[t];
@@ -520,15 +506,15 @@ function ligarPergunta(sec,t){
       if(E.respostas[p.chave].length) $('#erro',sec).textContent='';
     } else {
       E.respostas[p.chave]=inp.value; $('#avancar',sec).disabled=false; $('#erro',sec).textContent='';
-      if(t===8 && inp.value!=='t4_nunca_passei') delete E.respostas.t4_hipotetico;
+      if(t===7 && inp.value!=='t4_nunca_passei') delete E.respostas.t4_hipotetico;
     }
     $$('.op',sec).forEach(l=>l.classList.toggle('marcada', $('input',l).checked));
     salvar();
   }));
   $('#voltar',sec).addEventListener('click',()=>irPara(anterior(t)));
   $('#avancar',sec).addEventListener('click',()=>{
-    if(t===9){ if(!Array.isArray(E.respostas.e1)||!E.respostas.e1.length){ $('#erro',sec).textContent='Marque pelo menos uma opção.'; return; } }
-    if(t===10){ if(!E.respostas.e2){ $('#erro',sec).textContent='Marque uma opção para enviar.'; return; } enviar(); return; }
+    if(t===8){ if(!Array.isArray(E.respostas.e1)||!E.respostas.e1.length){ $('#erro',sec).textContent='Marque pelo menos uma opção.'; return; } }
+    if(t===9){ if(!E.respostas.e2){ $('#erro',sec).textContent='Marque uma opção para enviar.'; return; } enviar(); return; }
     if(!E.respostas[p.chave]) return;
     irPara(proxima(t));
   });
@@ -550,7 +536,7 @@ function htmlTabela(){
 }
 function htmlTela6(){
   const p={bloco:2,titulo:'Seis caminhos, <span class="lead">dez anos</span>'};
-  return `<div class="t6">${htmlTopo(6,p)}
+  return `<div class="t6">${htmlTopo(5,p)}
   <div class="t6-grid">
     <div class="t6-esq">
       <p class="apoio r">R$ 100 mil em janeiro de 2016, em seis carteiras reais que o Victor usa com clientes, só sem o nome.</p>
@@ -569,7 +555,7 @@ function htmlTela6(){
     </div>
   </div>
   <div class="tabela" id="tabela" hidden>${htmlTabela()}</div>
-  ${htmlNav(6,'Próxima',!!E.respostas.t2)}${htmlFoot(6)}</div>`;
+  ${htmlNav(5,'Próxima',!!E.respostas.t2)}${htmlFoot(5)}</div>`;
 }
 
 let t6Anim=null; // controle da animação em curso
@@ -658,8 +644,8 @@ function ligarTela6(sec){
   function aplicarSelecao(){ const v=E.respostas.t2; const L=v? v.slice(3).toUpperCase():null; palco.classList.toggle('tem-sel',!!L); $$('.cam',svg).forEach(p=>p.classList.toggle('sel',p.dataset.l===L)); $$('.cv',$('#valores',sec)).forEach((el,i)=>el.classList.toggle('sel',ORDEM[i]===L)); $$('.cam-k',cams).forEach(l=>l.classList.toggle('marcada',$('input',l).checked)); $('#avancar',sec).disabled=!L; }
   $$('input',cams).forEach(inp=>inp.addEventListener('change',()=>{ E.respostas.t2=inp.value; salvar(); aplicarSelecao(); }));
   $('#ver-tabela',sec).addEventListener('click',e=>{ const tb=$('#tabela',sec); const ab=tb.hidden; tb.hidden=!ab; e.currentTarget.setAttribute('aria-expanded',String(ab)); e.currentTarget.textContent=ab?'Esconder tabela':'Ver em tabela'; });
-  $('#voltar',sec).addEventListener('click',()=>irPara(5));
-  $('#avancar',sec).addEventListener('click',()=>{ if(E.respostas.t2) irPara(7); });
+  $('#voltar',sec).addEventListener('click',()=>irPara(4));
+  $('#avancar',sec).addEventListener('click',()=>{ if(E.respostas.t2) irPara(6); });
   // estado final x animação
   function estadoFinal(){ palco.classList.add('fim-anim'); marcosEl.classList.add('on'); dica.classList.add('on'); pergunta.classList.add('on'); cams.classList.add('on'); const cr=$('#clip-rect',svg); if(cr) cr.setAttribute('width',W); lerMes(N-1,false); aplicarSelecao(); }
   function pularAnimacao(){ if(!t6Anim) return; clearInterval(t6Anim.raf); clearTimeout(t6Anim.t1); clearTimeout(t6Anim.t2); t6Anim=null; estadoFinal(); E.t2Visto=true; salvar(); }
@@ -671,7 +657,7 @@ function ligarTela6(sec){
   }
   desenhar();
   if(reduzido || E.t2Visto){ estadoFinal(); } else { animar(); }
-  window.addEventListener('resize',()=>{ if(telaAtual!==6) return; const vis=palco.classList.contains('fim-anim'); desenhar(); if(vis){ const cr=$('#clip-rect',svg); if(cr) cr.setAttribute('width',W); aplicarSelecao(); } });
+  window.addEventListener('resize',()=>{ if(telaAtual!==5) return; const vis=palco.classList.contains('fim-anim'); desenhar(); if(vis){ const cr=$('#clip-rect',svg); if(cr) cr.setAttribute('width',W); aplicarSelecao(); } });
 }
 
 /* ======================================================================
@@ -681,8 +667,8 @@ let ultimoContrato=null, emEnvio=false;
 function montarContrato(){
   const r=E.respostas; const agora=new Date(); const ini=E.iniciadoEm?new Date(E.iniciadoEm):agora;
   return {
-    nome:(E.nome||'').trim(), contato:(E.contato||'').trim(), contato_tipo:E.contatoTipo, versao_formulario:VERSAO, origem:'formulario_perfil_v3', user_agent:navigator.userAgent,
-    respostas:{ contato_tipo:E.contatoTipo, horizonte_uso:r.horizonte_uso||null, previsibilidade_renda:r.previsibilidade_renda||null, reserva_emergencia:r.reserva_emergencia||null, dependencia_carteira:r.dependencia_carteira||null,
+    nome:(E.nome||'').trim(), contato:null, contato_tipo:null, versao_formulario:VERSAO, origem:'formulario_perfil_v3', user_agent:navigator.userAgent,
+    respostas:{ contato_tipo:null, horizonte_uso:r.horizonte_uso||null, previsibilidade_renda:r.previsibilidade_renda||null, reserva_emergencia:null, dependencia_carteira:r.dependencia_carteira||null,
       t1:r.t1||null, t2:r.t2||null, t3:r.t3||null, t4:r.t4||null, t4_hipotetico: r.t4==='t4_nunca_passei' ? (r.t4_hipotetico||null) : null,
       e1:Array.isArray(r.e1)?r.e1:[], e2:r.e2||null,
       _meta:{ iniciado_em:isoLocal(ini), enviado_em:isoLocal(agora), tempo_segundos:Math.max(0,Math.round((agora-ini)/1000)), retomou:!!E.retomou, nome_na_url:!!E.nomeNaUrl, largura_tela:window.innerWidth, t2_leu_meses:!!E.t2LeuMeses, t2_marcos_abertos:E.t2MarcosAbertos.slice() } } };
@@ -705,13 +691,13 @@ async function enviar(){
 function renderRecebido(){ apagarSalvo(); irPara('recebido'); }
 function renderErro(){ if(!ultimoContrato) ultimoContrato=montarContrato(); irPara('erro'); }
 function htmlEnviando(){ return `<div class="envio"><div class="eyebrow r">Enviando</div><h2 class="titulo r" id="titulo">Guardando as suas respostas</h2><div class="linha-cresce r"><i></i></div><p class="apoio r">Só um instante.</p></div>`; }
-function htmlRecebido(){ const nm=primeiroNome(E.nome)||'você'; return `<div class="envio"><div class="eyebrow r">Recebido</div><h2 class="titulo grande r" id="titulo">Obrigado, <span class="lead">${esc(nm)}</span>.</h2><div class="callout r">O Victor vai ler tudo com calma e apresenta o resultado na conversa de vocês. Pode fechar esta página.</div><p class="small r" style="margin-top:12px">Se lembrar de algo, é só mandar mensagem para ele.</p></div><div class="foot"><span>Victor Faleiros · Perfil de investimentos</span><span class="num">10 / 10</span></div>`; }
+function htmlRecebido(){ const nm=primeiroNome(E.nome)||'você'; return `<div class="envio"><div class="eyebrow r">Recebido</div><h2 class="titulo grande r" id="titulo">Obrigado, <span class="lead">${esc(nm)}</span>.</h2><div class="callout r">O Victor vai ler tudo com calma e apresenta o resultado na conversa de vocês. Pode fechar esta página.</div><p class="small r" style="margin-top:12px">Se lembrar de algo, é só mandar mensagem para ele.</p></div><div class="foot"><span>Victor Faleiros · Perfil de investimentos</span><span class="num">9 / 9</span></div>`; }
 function htmlErro(){ return `<div class="envio"><div class="eyebrow r">Quase lá</div><h2 class="titulo r" id="titulo">Não consegui enviar agora</h2><div class="callout gold r">Toque no botão abaixo para mandar as suas respostas ao Victor por e-mail. Já vai tudo preenchido.</div><div class="nav r" style="justify-content:flex-start;gap:8px"><a class="btn" id="mailto" href="#" style="display:inline-flex;align-items:center;text-decoration:none">Enviar por e-mail</a><button type="button" class="btn txt" id="tentar">Tentar de novo</button></div><p class="small r">As suas respostas continuam guardadas neste aparelho enquanto isso.</p></div>`; }
 function textoOpcao(chave,id){ for(const k of Object.keys(PERGUNTAS)){ const p=PERGUNTAS[k]; if(p.chave===chave){ const o=p.opcoes.find(x=>x.id===id); if(o) return o.html.replace(/<span class="(sub|desc)">.*?<\/span>/g,'').replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim(); } } return id||''; }
 function corpoEmail(c){
   const r=c.respostas; const L=r.t2?r.t2.slice(3).toUpperCase():null; const d=L?DERIV[L]:null;
-  const linhas=[`Perfil de investimentos: ${c.nome}`,`Contato (${r.contato_tipo}): ${c.contato}`,'',
-    'BLOCO 1 · COM O QUE VOCÊ PODE CONTAR',`Quando vai usar: ${textoOpcao('horizonte_uso',r.horizonte_uso)}`,`Como é a sua renda: ${textoOpcao('previsibilidade_renda',r.previsibilidade_renda)}`,`Se a renda parasse: ${textoOpcao('reserva_emergencia',r.reserva_emergencia)}`,`O investido paga conta: ${textoOpcao('dependencia_carteira',r.dependencia_carteira)}`,'',
+  const linhas=[`Perfil de investimentos: ${c.nome}`,'',
+    'BLOCO 1 · COM O QUE VOCÊ PODE CONTAR',`Quando vai usar: ${textoOpcao('horizonte_uso',r.horizonte_uso)}`,`Como é a sua renda: ${textoOpcao('previsibilidade_renda',r.previsibilidade_renda)}`,`O investido paga conta: ${textoOpcao('dependencia_carteira',r.dependencia_carteira)}`,'',
     'BLOCO 2 · COMO VOCÊ LIDA COM OSCILAÇÃO',`Retrato: ${textoOpcao('t1',r.t1)}`, d?`Seis caminhos: ${L} (virou ${fmtMil(d.fim)}, maior queda ${fmtPct(d.mdd)}, ${d.meses} meses sem recuperar)`:'Seis caminhos: ', `Queda que você topa: ${textoOpcao('t3',r.t3)}`,`Na última queda forte: ${textoOpcao('t4',r.t4)}`, r.t4_hipotetico?`Se acontecesse: ${textoOpcao('t4_hipotetico',r.t4_hipotetico)}`:null,'',
     'BLOCO 3 · SUA EXPERIÊNCIA',`O que você já teve: ${(r.e1||[]).map(i=>textoOpcao('e1',i)).join('; ')}`,`Em qual crise já investia: ${textoOpcao('e2',r.e2)}`,'',
     'Código técnico: '+JSON.stringify(c)].filter(x=>x!==null);
@@ -723,7 +709,7 @@ function ligarEnvio(sec,t){
 
 function ligar(sec,t){
   if(t===0) ligarAbertura(sec);
-  else if(t===6) ligarTela6(sec);
+  else if(t===5) ligarTela6(sec);
   else if(PERGUNTAS[t]) ligarPergunta(sec,t);
   else ligarEnvio(sec,t);
 }
